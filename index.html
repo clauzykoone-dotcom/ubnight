@@ -794,7 +794,7 @@ function rvList(v){
   if(!REVIEWS_URL){box.innerHTML='<div class="hint">Үнэлгээний хэсэг удахгүй нээгдэнэ.</div>';return}
   if(!a){box.innerHTML='<div class="hint">Уншиж байна…</div>';return}
   if(sm)sm.textContent=a.length?`★ ${(a.reduce((x,r)=>x+r.stars,0)/a.length).toFixed(1)} · ${a.length} үнэлгээ`:'';
-  box.innerHTML=a.length?a.slice(0,10).map(r=>`<div class="rv"><b>${esc(r.name)}</b> <span class="st" aria-label="${r.stars} од">${stars5(r.stars)}</span> <time>${esc((r.t||'').slice(0,10).replace(/-/g,'.'))}</time>${r.text?`<p>${esc(r.text)}</p>`:''}</div>`).join(''):'<div class="hint">Одоогоор үнэлгээ алга. Анхны үнэлгээг та үлдээгээрэй.</div>';
+  box.innerHTML=a.length?a.slice(0,10).map(r=>`<div class="rv"><b>${esc(r.name)}</b> <span class="st" aria-label="${r.stars} од">${stars5(r.stars)}</span> <time>${r.t?iso(new Date(r.t)).replace(/-/g,'.'):''}</time>${r.text?`<p>${esc(r.text)}</p>`:''}</div>`).join(''):'<div class="hint">Одоогоор үнэлгээ алга. Анхны үнэлгээг та үлдээгээрэй.</div>';
 }
 function loadRV(v){if(!v)return;if(!REVIEWS_URL){rvList(v);return}
   fetch(REVIEWS_URL+'?venue='+encodeURIComponent(v.id)).then(r=>r.json()).then(j=>{RV[v.id]=(j&&j.reviews)||[];rvList(v)}).catch(()=>{RV[v.id]=[];rvList(v)})}
