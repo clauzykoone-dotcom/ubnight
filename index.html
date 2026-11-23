@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <script>try{const t=localStorage.getItem('zahialya.theme');if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(_){}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 /* Layout: sticky top bar → filter strip → venue grid; booking opens as a side sheet (full-height bottom sheet on phones). Dark-first: it is a night-out app. */
 :root{
@@ -86,6 +87,26 @@ button{cursor:pointer}
 :root[data-theme="dark"] .only-day,:root[data-theme="light"] .only-night{display:none!important}
 @media (prefers-color-scheme:light){:root:not([data-theme]) .only-night{display:none!important}}
 @media (prefers-color-scheme:dark){:root:not([data-theme]) .only-day{display:none!important}}
+.mview{position:fixed;inset:0;z-index:60;background:var(--bg);overflow-y:auto;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.mview .mw{max-width:720px;margin:0 auto;display:grid;gap:16px}
+.mview .mh{display:flex;align-items:center;gap:12px;justify-content:space-between}
+.mview h2{margin:0;font-family:var(--display);font-size:26px}
+.mview .mcat{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.mview .mrow{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.mview .mrow small{display:block;color:var(--muted);font-weight:500}
+.mview .mrow b{font-family:var(--mono);white-space:nowrap}
+.mview .mact{display:flex;flex-wrap:wrap;gap:8px}
+.qrbox{display:grid;justify-items:center;gap:12px;padding:18px;border-radius:18px;background:#fff;color:#111}
+.qrbox canvas,.qrbox img{width:220px!important;height:220px!important}
+.vsec{display:grid;gap:10px;border:1px solid var(--line);border-radius:16px;padding:14px}
+.vsec-h{font-weight:800}.vsec-h small{font-weight:600;color:var(--muted)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.units-ed{display:grid;gap:8px}
+.urow{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr auto;gap:6px;align-items:end}
+.urow label{font-size:12px}.urow input{width:100%;min-width:0}
+.urow .x{border:0;background:var(--surface2);color:var(--fg);border-radius:10px;width:36px;height:38px;cursor:pointer}
+@media (max-width:560px){.urow{grid-template-columns:1fr 1fr}.urow label:first-child{grid-column:1/-1}}
+.realpill{background:#16A34A!important;color:#fff!important}
 .lunch{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;background:color-mix(in srgb,#F59E0B 18%,transparent);color:#B45309;margin:2px 0}
 :root[data-theme="light"] .logo-ic .d-only{display:inline} :root[data-theme="light"] .logo-ic .n-only{display:none} :root[data-theme="light"] .brand .w-night{display:none} :root[data-theme="light"] .brand .w-day{display:inline} :root[data-theme="light"] .logo-ic .skyline{fill:#334155} :root[data-theme="light"] .brand .neon{filter:drop-shadow(0 0 2px rgba(251,191,36,.9)) drop-shadow(0 0 8px rgba(249,115,22,.55))} :root[data-theme="light"] .brand .w-day{background-image:linear-gradient(90deg,#F59E0B,#F97316)}
 @media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .logo-ic .d-only{display:inline} :root:not([data-theme="dark"]) .logo-ic .n-only{display:none} :root:not([data-theme="dark"]) .brand .w-night{display:none} :root:not([data-theme="dark"]) .brand .w-day{display:inline} :root:not([data-theme="dark"]) .logo-ic .skyline{fill:#334155} :root:not([data-theme="dark"]) .brand .neon{filter:drop-shadow(0 0 2px rgba(251,191,36,.9)) drop-shadow(0 0 8px rgba(249,115,22,.55))} :root:not([data-theme="dark"]) .brand .w-day{background-image:linear-gradient(90deg,#F59E0B,#F97316)}}
@@ -631,6 +652,8 @@ button{cursor:pointer}
       <div class="feat"><b>Үйлчлүүлэгчид үнэгүй</b><span>Үйлчлүүлэгчээс ямар ч шимтгэл авахгүй, тиймээс захиалах нь амархан.</span></div>
       <div class="feat"><b>Нэг самбар</b><span>Утас, биечлэн болон апп-аар ирсэн захиалгыг нэг хүснэгтээс харна.</span></div>
       <div class="feat"><b>Нэмэлт борлуулалт</b><span>Ундаа, хачир, бялуу, чимэглэлийг үйлчлүүлэгч урьдчилж захиална.</span></div>
+      <div class="feat"><b>📱 Үнэгүй QR цэс</b><span>Ширээн дээрх QR-ыг уншуулахад таны цэс утсанд нээгдэнэ. Хэвлээд л тавина.</span></div>
+      <div class="feat"><b>⭐ Үнэлгээ, урамшуулал</b><span>Үйлчлүүлэгчийн үнэлгээ, төрсөн өдрийн бэлэг, хямдрал тань сайтад харагдана.</span></div>
       <div class="feat"><b>Шинэ үйлчлүүлэгч</b><span>«Өнөө орой хаана очих вэ» гэж хайж буй хүмүүст таны газар харагдана.</span></div>
     </div>
     <div class="price-box">
@@ -639,8 +662,9 @@ button{cursor:pointer}
     </div>
     <h3 class="section-title" style="font-size:22px">Яаж эхлэх вэ</h3>
     <ol class="steps">
-      <li>Доорх маягтыг бөглөнө.</li>
-      <li>Бид мэдээллийг шалгаад 24 цагийн дотор бүртгэлийг баталгаажуулж, нийтэлнэ. Тусламж: 8505 0628.</li>
+      <li><b>Нэр, төрөл, утсаа</b> бичнэ. Бусдыг нь хүссэнээрээ нэмнэ.</li>
+      <li>Цаг, ширээ/өрөө, үнэ, урамшууллаа бөглөвөл газар тань бүрэн харагдана.</li>
+      <li>Бид шалгаад <b>24 цагийн дотор сайтад нийтэлнэ.</b> Тусламж: 8505 0628.</li>
     </ol>
     <form class="join" id="joinForm" novalidate>
       <div class="seg who" role="group" aria-label="Бүртгүүлэгч">
@@ -652,33 +676,56 @@ button{cursor:pointer}
       </div>
       <label><span data-for="org">Газрын нэр</span><span data-for="person" hidden>Таны нэр</span><input id="jName" required placeholder="Жишээ: Микрофон Караоке"></label>
       <label data-for="org">Төрөл<select id="jType"><option>Бар</option><option>Ресторан</option><option>Караоке</option><option>Лаунж</option><option>Стрип клаб</option><option>Эвент заал</option></select></label>
-      <label>Холбогдох утас<input id="jPhone" inputmode="numeric" maxlength="8" required placeholder="99112233"></label>
-      <label data-for="org">Хаяг<textarea id="jAddr" rows="2" placeholder="Дүүрэг, хороо, гудамж, байр, давхар"></textarea></label>
+      <label>Холбогдох утас<input id="jPhone" inputmode="numeric" maxlength="8" required placeholder="99112233"><small class="hint">Сайтад харагдахгүй, бид баталгаажуулахад залгана.</small></label>
+      <div data-for="org" class="vsec">
+        <div class="vsec-h">📍 Байршил ба цаг <small>(заавал биш)</small></div>
+        <div class="vgrid">
+          <label>Дүүрэг<select id="jDist"><option value="">Сонгох</option><option>Сүхбаатар</option><option>Чингэлтэй</option><option>Хан-Уул</option><option>Баянзүрх</option><option>Баянгол</option><option>Сонгинохайрхан</option><option>Налайх</option><option>Багануур</option><option>Багахангай</option></select></label>
+          <label>Нээх цаг<select id="jOpen"><option value="6">06:00</option><option value="7">07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option><option value="14">14:00</option><option value="15">15:00</option><option value="16">16:00</option><option value="17">17:00</option><option value="18">18:00</option><option value="19">19:00</option><option value="20">20:00</option><option value="21">21:00</option><option value="22">22:00</option><option value="23">23:00</option><option value="24">00:00 (шөнө)</option><option value="25">01:00 (шөнө)</option><option value="26">02:00 (шөнө)</option><option value="27">03:00 (шөнө)</option><option value="28">04:00 (шөнө)</option><option value="29">05:00 (шөнө)</option></select></label>
+          <label>Хаах цаг<select id="jClose"><option value="6">06:00</option><option value="7">07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="10">10:00</option><option value="11">11:00</option><option value="12">12:00</option><option value="13">13:00</option><option value="14">14:00</option><option value="15">15:00</option><option value="16">16:00</option><option value="17">17:00</option><option value="18">18:00</option><option value="19">19:00</option><option value="20">20:00</option><option value="21">21:00</option><option value="22">22:00</option><option value="23">23:00</option><option value="24">00:00 (шөнө)</option><option value="25">01:00 (шөнө)</option><option value="26">02:00 (шөнө)</option><option value="27">03:00 (шөнө)</option><option value="28">04:00 (шөнө)</option><option value="29">05:00 (шөнө)</option></select></label>
+        </div>
+        <label data-for="org">Хаяг<textarea id="jAddr" rows="2" placeholder="Дүүрэг, хороо, гудамж, байр, давхар"></textarea></label>
       <label data-for="org">Байршлын холбоос
         <input id="jMap" type="text" inputmode="url" autocomplete="url" placeholder="Google Maps эсвэл дурын газрын зургийн холбоос">
         <small class="hint">Google Maps, 2GIS гэх мэт ямар ч газрын зургийн холбоос болно. Google Maps дээр «Share» → «Copy link».</small>
         <a id="jMapOpen" class="ghost" target="_blank" rel="noopener" hidden>Байршлыг шалгах ↗</a>
       </label>
-      <div data-for="org" class="qr-field">
-        <span class="lbl">QR меню</span>
-        <label class="drop"><input id="jQr" type="file" accept="image/*"><span id="jQrTxt">QR меню эсвэл менюгийн зургаа сонгох</span></label>
-        <img id="jQrImg" alt="QR менюгийн урьдчилсан харагдац" hidden>
-        <input id="jMenuUrl" type="url" inputmode="url" placeholder="эсвэл онлайн менюгийн холбоос (заавал биш)" aria-label="Онлайн менюгийн холбоос">
+        <label>Товч тайлбар<input id="jTag" maxlength="90" placeholder="Жишээ: Амьд хөгжим · VIP өрөө · зогсоолтой"></label>
       </div>
-      <label data-for="org">Урамшуулал, төрсөн өдрийн бэлэг <small class="hint">(заавал биш)</small><textarea id="jPromo" rows="2" placeholder="Жишээ: Төрсөн өдрийн хүнд бялуу бэлэг · Даваа–Пүрэв 20% хямд"></textarea></label>
+      <div data-for="org" class="vsec">
+        <div class="vsec-h">🪑 Ширээ, өрөө, үнэ <small>(заавал биш)</small></div>
+        <p class="hint" style="margin:0">Төрөл бүрээр нэг мөр. Үнэ 0 бол «захиалга үнэгүй».</p>
+        <div id="jUnits" class="units-ed"></div>
+        <button type="button" class="ghost" id="jAddUnit">+ Мөр нэмэх</button>
+      </div>
+      <div data-for="org" class="vsec">
+        <div class="vsec-h">🎁 Урамшуулал ба ланч <small>(заавал биш)</small></div>
+        <label>Төрсөн өдрийн бэлэг<input id="jBday" maxlength="120" placeholder="Жишээ: Төрсөн өдрийн хүнд бялуу бэлэг"></label>
+        <label>Хямдрал<input id="jDeal" maxlength="120" placeholder="Жишээ: Даваа–Пүрэв 18:00–20:00 цагт 20% хямд"></label>
+        <label>Өдрийн хоол (ланч)<input id="jLunch" maxlength="90" placeholder="Жишээ: Бизнес ланч 12:00–14:00 · 15,900₮"></label>
+      </div>
+      <div data-for="org" class="qr-field">
+        <span class="lbl">Меню <small class="hint">(заавал биш)</small></span>
+        <label class="drop" hidden><input id="jQr" type="file" accept="image/*"><span id="jQrTxt">QR меню эсвэл менюгийн зургаа сонгох</span></label>
+        <img id="jQrImg" alt="QR менюгийн урьдчилсан харагдац" hidden>
+        <input id="jMenuUrl" type="url" inputmode="url" placeholder="Онлайн менюгийн холбоос (Qmenu, Facebook, Google Drive…)" aria-label="Онлайн менюгийн холбоос">
+      </div>
+      <textarea id="jPromo" hidden></textarea>
       <label data-for="org" data-hall>Хүлээн авах хүний тоо<input id="jCap" type="number" inputmode="numeric" min="1" max="5000" placeholder="Жишээ: 200"><small class="hint">Хамгийн том заалдаа хэдэн хүн багтах вэ. Хэд хэдэн заалтай бол дараа нь тус бүрээр нь оруулна.</small></label>
       <div data-for="org" class="qr-field">
-        <span class="lbl" id="jPhLbl">Газрын зураг (заавал биш)</span>
-        <label class="drop"><input id="jPhotos" type="file" accept="image/*" multiple><span id="jPhTxt">Заал, ширээ, тайзны зургуудаа сонгох (хэдийг ч)</span></label>
+        <span class="lbl" id="jPhLbl">Зураг</span>
+        <p class="hint" style="margin:0">Зургаа 8505 0628 дугаар руу Messenger, Telegram-аар илгээвэл бид нэмж өгнө.</p>
+        <label class="drop" hidden><input id="jPhotos" type="file" accept="image/*" multiple><span id="jPhTxt">Заал, ширээ, тайзны зургуудаа сонгох (хэдийг ч)</span></label>
         <div class="thumbs" id="jThumbs"></div>
       </div>
       <div id="jMsg" role="status" aria-live="polite"></div>
       <button class="cta" type="submit" id="jSubmit">Бүртгүүлэх хүсэлт илгээх</button>
-      <p class="hint" style="margin:0">Прототип: хүсэлт зөвхөн энэ төхөөрөмжид хадгалагдана.</p>
+      <p class="hint" style="margin:0">Илгээсний дараа бид шалгаад 24 цагийн дотор сайтад нийтэлнэ.</p>
     </form>
   </section>
 </main>
 
+<div class="mview" id="mview" hidden role="dialog" aria-modal="true" aria-labelledby="mvTitle"></div>
 <div class="backdrop" id="backdrop" hidden></div>
 <aside class="sheet" id="sheet" hidden aria-modal="true" role="dialog" aria-labelledby="sheetTitle"></aside>
 
@@ -943,7 +990,7 @@ function renderGrid(){
     const ftxt=pk===null?(lateNight?'Өнөө шөнийн цаг дууссан':'Өнөөдрийн цаг дууссан'):f===0?`${hl(pk)}-д дүүрсэн`:`${hl(pk)}-д ${f} ${unit} сул`;
     const fv=S.favs.includes(v.id);
     return `<div class="cw"><button class="fav" data-fav="${v.id}" aria-pressed="${fv}" aria-label="${esc(v.name)} — ${fv?'хадгалснаас хасах':'хадгалах'}">${fv?'♥':'♡'}</button><button class="card" data-open="${v.id}" style="--h:${v.hue}">
-      <div class="band"><span class="glyph">${esc(v.name[0])}</span><span><span class="pill">${TN[v.type]}</span>${v.adult?'<span class="pill adult">18+</span>':''}${v.own?'<span class="pill own">Таны бар</span>':''}</span></div>
+      <div class="band"><span class="glyph">${esc(v.name[0])}</span><span><span class="pill">${TN[v.type]}</span>${v.adult?'<span class="pill adult">18+</span>':''}${v.own?'<span class="pill own">Таны бар</span>':''}${v.real?'<span class="pill realpill">✓ Бүртгэлтэй</span>':''}</span></div>
       <div class="body">
         <h3>${esc(v.name)}</h3>
         <div class="meta">${esc(v.tagline)}</div>
@@ -1020,7 +1067,7 @@ function renderSheet(){
   $('#sheet').innerHTML=`
     <div class="sheet-head"><div><span class="pill" style="background:var(--accent-soft);color:var(--accent)">${TN[v.type]}</span>
       <h2 id="sheetTitle">${esc(v.name)}</h2><div class="meta">${esc(v.tagline)}</div></div>
-      <span style="display:flex;gap:8px"><button class="x" data-share="${v.id}" aria-label="Энэ газрыг хуваалцах" title="Хуваалцах">🔗</button><button class="x" data-close aria-label="Хаах">×</button></span></div>
+      <span style="display:flex;gap:8px"><button class="x" data-menu="${v.id}" aria-label="Цэс харах" title="Цэс">📋</button><button class="x" data-qr="${v.id}" aria-label="QR код" title="QR код">▦</button><button class="x" data-share="${v.id}" aria-label="Энэ газрыг хуваалцах" title="Хуваалцах">🔗</button><button class="x" data-close aria-label="Хаах">×</button></span></div>
     <div class="sheet-body">
       ${(pr0(v).bday||pr0(v).deal)?`<div class="step"><div class="promo-box"><b>🎁 Урамшуулал</b>${pr0(v).deal?`<span>🏷️ ${esc(pr0(v).deal)}</span>`:''}${pr0(v).bday?`<span>🎂 ${esc(pr0(v).bday)}${d.ev==='Төрсөн өдөр'?' <span class="hit">· таны захиалгад хамаарна ✓</span>':''}</span>`:''}</div></div>`:''}
       ${hall?`<div class="step"><h4>Зураг</h4><div class="gal">${(v.photos||[]).map((src,i)=>`<figure><img src="${src}" alt="${esc(v.name)} зураг ${i+1}"></figure>`).join('')||v.units.flatMap((x,i)=>[0,1].map(k=>`<figure>${hallSvg(v,x,(i*2+k)%3)}<figcaption>${esc(x.n)} · ${x.cap} хүн</figcaption></figure>`)).join('')}</div>${(v.photos||[]).length?'':'<div class="hint">Жишээ зураг. Газрын эзэн бүртгүүлэхдээ жинхэнэ зургаа оруулна.</div>'}</div>
@@ -1365,6 +1412,16 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('keydown',e=>{if(PAY&&e.key==='Escape'){if(PAY.st==='sent'){$('#jMsg').innerHTML=`<div class="ok">✓ <b>${esc(PAY.rec.name)}</b>-ийн хүсэлт хүлээн авлаа. Код <span class="mono">${PAY.rec.code}</span>.</div>`;resetJoin()}closePay()}});
 
+/* venue registration: unit rows editor */
+const TYPE_CODE={'Бар':'bar','Ресторан':'restaurant','Караоке':'karaoke','Лаунж':'lounge','Стрип клаб':'strip','Эвент заал':'hall'};
+const UNIT_DEF={bar:['Ширээ · 2–4 хүн',4],restaurant:['Ширээ · 2–4 хүн',4],karaoke:['Жижиг өрөө',6],lounge:['Буйдан · 2–4 хүн',4],strip:['Ширээ · 2–4 хүн',4],hall:['Үндсэн танхим',100]};
+function unitRow(u){const d=document.createElement('div');d.className='urow';
+  d.innerHTML=`<label>Нэр<input class="un" maxlength="40" value="${esc(u.n||'')}" placeholder="VIP өрөө"></label><label>Хүн<input class="uc" type="number" min="1" inputmode="numeric" value="${u.cap||''}"></label><label>Тоо<input class="uq" type="number" min="1" inputmode="numeric" value="${u.count||''}"></label><label>Үнэ ₮<input class="up" type="number" min="0" step="1000" inputmode="numeric" value="${u.price??''}" placeholder="0"></label><button type="button" class="x" aria-label="Мөр хасах">×</button>`;
+  d.querySelector('.x').addEventListener('click',()=>d.remove());return d}
+function resetUnits(){const box=$('#jUnits');if(!box)return;box.innerHTML='';const t=TYPE_CODE[$('#jType').value]||'bar',[n,c]=UNIT_DEF[t];box.appendChild(unitRow({n,cap:c,count:t==='hall'?1:5,price:0}))}
+$('#jAddUnit')?.addEventListener('click',()=>$('#jUnits').appendChild(unitRow({count:1,price:0})));
+$('#jType')?.addEventListener('change',()=>{const b=$('#jUnits');if(b&&b.children.length<=1)resetUnits()});
+{const o=$('#jOpen'),c=$('#jClose');if(o)o.value='18';if(c)c.value='26';resetUnits()}
 $('#joinForm').addEventListener('submit',e=>{
   e.preventDefault();
   const n=$('#jName'),ph=$('#jPhone'),ad=$('#jAddr'),mp=$('#jMap'),m=$('#jMsg');
@@ -1374,22 +1431,25 @@ $('#joinForm').addEventListener('submit',e=>{
   if(ph.value.length!==8)return bad(ph,'Утасны дугаар 8 оронтой байх ёстой.');
   const rec={who:WHO,name:n.value.trim(),phone:ph.value,at:new Date().toISOString()};
   if(WHO==='org'){
-    if(!ad.value.trim())return bad(ad,'Хаягаа бичнэ үү.');
-    if(!MAPRE.test(mp.value.trim()))return bad(mp,'Байршлын холбоосоо буулгана уу (Google Maps, 2GIS гэх мэт).');
-    if(!QR&&!$('#jMenuUrl').value.trim()){m.innerHTML='<div class="err">QR меню эсвэл менюгийн холбоосоо оруулна уу.</div>';$('#jQr').focus();return}
+    if(mp.value.trim()&&!MAPRE.test(mp.value.trim()))return bad(mp,'Байршлын холбоос буруу байна. Google Maps-аас «Share» → «Copy link» хийгээд буулгана уу.');
     const isHall=$('#jType').value==='Эвент заал',cp=$('#jCap');cp.removeAttribute('aria-invalid');
-    if(isHall&&!(+cp.value>=1))return bad(cp,'Заал хэдэн хүн хүлээж авах боломжтойг бичнэ үү.');
-    if(isHall&&!PHOTOS.length){m.innerHTML='<div class="err">Заалынхаа зургийг дор хаяж нэгийг оруулна уу.</div>';$('#jPhotos').focus();return}
     Object.assign(rec,{capacity:isHall?+cp.value:null,photos:PHOTOS,promo:$('#jPromo').value.trim()});
-    Object.assign(rec,{type:$('#jType').value,address:ad.value.trim(),map:mapUrl(mp.value),qr:QR,menuUrl:$('#jMenuUrl').value.trim()});
+    Object.assign(rec,{type:$('#jType').value,address:ad.value.trim(),map:mp.value.trim()?mapUrl(mp.value):'',qr:QR,menuUrl:$('#jMenuUrl').value.trim()});
   }
   if(WHO==='org'&&FEE_ON){m.innerHTML='';openPay(rec);return}
   saveLead(rec);
+  if(WHO==='org'&&REVIEWS_URL){
+    const units=[...document.querySelectorAll('#jUnits .urow')].map(r=>({n:r.querySelector('.un').value.trim(),cap:+r.querySelector('.uc').value||0,count:+r.querySelector('.uq').value||1,price:+r.querySelector('.up').value||0})).filter(u=>u.n||u.cap);
+    const body={kind:'venue',name:rec.name,type:TYPE_CODE[rec.type]||'bar',phone:rec.phone,district:$('#jDist').value,address:rec.address,map:rec.map,
+      open:+$('#jOpen').value,close:+$('#jClose').value,tagline:$('#jTag').value.trim(),units,lunch:$('#jLunch').value.trim(),bday:$('#jBday').value.trim(),deal:$('#jDeal').value.trim(),menu:rec.menuUrl,capacity:rec.capacity||0};
+    fetch(REVIEWS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}).catch(()=>{m.innerHTML='<div class="err">Илгээж чадсангүй. Интернэтээ шалгаад дахин оролдоно уу, эсвэл 8505 0628 руу залгана уу.</div>'});
+  }
   m.innerHTML=WHO==='org'
-    ?`<div class="ok">Баярлалаа! <b>${esc(rec.name)}</b>-ийн хүсэлтийг хүлээн авлаа. Бид ${esc(rec.phone)} дугаар руу холбогдож, бүртгэлийг баталгаажуулна.</div>`
+    ?`<div class="ok">Баярлалаа! <b>${esc(rec.name)}</b> бүртгэгдлээ. Бид шалгаад 24 цагийн дотор сайтад нийтэлнэ. Асуух зүйл байвал ${esc(rec.phone)} руу залгана.</div>`
     :`<div class="ok">Тавтай морил, <b>${esc(rec.name)}</b>! Таны бүртгэл үүслээ.</div>`;
   e.target.reset();QR=null;$('#jQrImg').hidden=true;$('#jMapOpen').hidden=true;$('#jQrTxt').textContent='QR меню эсвэл менюгийн зургаа сонгох';
   PHOTOS=[];$('#jThumbs').innerHTML='';$('#jPhTxt').textContent='Заал, ширээ, тайзны зургуудаа сонгох (хэдийг ч)';syncHall();
+  {const o=$('#jOpen'),c=$('#jClose');if(o)o.value='18';if(c)c.value='26';resetUnits()}
 });
 syncHall();
 render();
@@ -1399,6 +1459,38 @@ render();
  tb.addEventListener('click',()=>{const n=eff()==='light'?'dark':'light';document.documentElement.dataset.theme=n;try{localStorage.setItem('zahialya.theme',n)}catch(_){}sync();renderGrid()});
  matchMedia('(prefers-color-scheme: light)').addEventListener?.('change',sync);sync()}
 loadRSum();
+/* QR menu: a full-screen menu for one venue at #menu-<id>; the QR code points to that link */
+const menuUrlOf=v=>location.origin+location.pathname+'#menu-'+v.id;
+function openMenu(id,qr){const v=vById(id),el=$('#mview');if(!v||!el)return;
+  const items=MENU[v.type]||[],own=v.menu?`<a class="ghost" href="${esc(v.menu)}" target="_blank" rel="noopener">📄 Газрын бүтэн цэс ↗</a>`:'';
+  el.innerHTML=`<div class="mw"><div class="mh"><div><div class="mcat">${esc(TN[v.type]||'')}${v.district&&v.district!=='—'?' · '+esc(v.district):''} · ${hl(v.open)}–${hl(v.close)}</div><h2 id="mvTitle">${esc(v.name)}</h2></div><button class="x" data-mclose aria-label="Хаах">×</button></div>
+    ${qr?`<div class="qrbox"><div id="qrCanvas"></div><b>${esc(v.name)} · QR цэс</b><small>Ширээн дээр тавихад үйлчлүүлэгч утсаараа уншуулаад цэсээ харна</small></div><div class="mact"><a class="ghost" id="qrDl" download="ubnight-qr-${esc(v.id)}.png">⬇ QR татах</a><button class="ghost" data-qrcopy>🔗 Холбоос хуулах</button></div>`:''}
+    ${v.lunch?`<span class="lunch">🍱 ${esc(v.lunch)}</span>`:''}
+    <div class="mcat">Цэс</div>${items.map(m=>`<div class="mrow"><div>${esc(m.n)}<small>${esc(m.d)}</small></div><b>${fmt(m.p)}</b></div>`).join('')}
+    ${own}<div class="hint">${v.real?'Үнэ газраас өөрчлөгдөж болно.':'Жишээ цэс. Газар бүртгүүлэхдээ өөрийн цэсийн холбоосыг оруулна.'}</div>
+    <div class="mact"><button class="cta" data-mopen="${esc(v.id)}" data-mclose>Ширээ захиалах</button></div></div>`;
+  el.hidden=false;document.body.style.overflow='hidden';el.querySelector('[data-mclose]')?.focus();
+  if(qr&&window.QRCode){const box=$('#qrCanvas');new QRCode(box,{text:menuUrlOf(v),width:440,height:440,correctLevel:QRCode.CorrectLevel.M});
+    setTimeout(()=>{const c=box.querySelector('canvas'),a=$('#qrDl');if(c&&a)a.href=c.toDataURL('image/png')},50)}}
+function closeMenu(){const el=$('#mview');if(!el||el.hidden)return;el.hidden=true;el.innerHTML='';document.body.style.overflow='';if(location.hash.startsWith('#menu-'))history.replaceState(null,'',location.pathname+location.search)}
+document.addEventListener('click',async e=>{
+  const mb=e.target.closest('[data-menu]');if(mb){if(S.d)closeSheet();openMenu(mb.dataset.menu,false);return}
+  const qb=e.target.closest('[data-qr]');if(qb){if(S.d)closeSheet();openMenu(qb.dataset.qr,true);return}
+  if(e.target.closest('[data-qrcopy]')){const v=vById(($('#mview [data-mopen]')||{}).dataset?.mopen);try{await navigator.clipboard.writeText(menuUrlOf(v));e.target.textContent='✓ Хуулагдлаа'}catch(_){}return}
+  const mc=e.target.closest('[data-mclose]');if(mc){const id=mc.dataset.mopen;closeMenu();if(id)openSheet(id)}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+function menuFromHash(){const m=location.hash.match(/^#menu-([\w-]+)/);if(m&&vById(m[1]))openMenu(m[1],false)}
+addEventListener('hashchange',menuFromHash);
+/* venues the owner registered and the admin approved in the «venues» sheet */
+function loadRealVenues(){if(!REVIEWS_URL)return;fetch(REVIEWS_URL+'?venues=1').then(r=>r.json()).then(j=>{
+  (j&&j.venues||[]).forEach(d=>{if(!d||!d.id||V.some(v=>v.id===d.id))return;
+    let h=0;for(const ch of d.name)h=(h*31+ch.charCodeAt(0))%360;
+    const units=(d.units&&d.units.length?d.units:[{id:'u0',n:d.type==='hall'?'Үндсэн танхим':'Ширээ · 2–4 хүн',cap:d.type==='hall'?(d.capacity||100):4,count:d.type==='hall'?1:5,price:0}]);
+    V.push({id:d.id,name:d.name,type:d.type,district:d.district||'—',hue:h,open:d.open??18,close:d.close??26,tagline:d.tagline||TN[d.type]||'',units,lunch:d.lunch||undefined,adult:d.type==='strip',real:true,map:d.map,menu:d.menu});
+    if(d.bday||d.deal)PROMO[d.id]={bday:d.bday||undefined,deal:d.deal||undefined};
+  });render();menuFromHash()}).catch(()=>{})}
+loadRealVenues();
+menuFromHash();
 {const m=location.hash.match(/^#v=([\w-]+)/);if(m&&vById(m[1]))openSheet(m[1])}
 /* installable app (PWA): register the service worker on https only, offer an install button when the browser allows it */
 if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
@@ -1412,7 +1504,7 @@ window.UBN_EN = {
 "UB Night — нүүр":"UB Night — home",
 "Улаанбаатарын бар, ресторан, караоке, лаунж, стрип клаб, эвент заалуудыг нэг дороос хараад сул өрөө, ширээ, танхимаа сонгоно. Захиалга үнэгүй, төлбөрөө газар дээр нь төлнө. Бялуу, чимэглэл, DJ, хөтлөгч, буцахдаа жолоочийг хүртэл хамт захиална":"See Ulaanbaatar's bars, restaurants, karaoke, lounges, strip clubs and event halls in one place and pick a free room, table or hall. Booking is free and you pay at the venue. Add a cake, decorations, a DJ, an MC and even a driver home in the same booking",
 "Өнөө орой сул байгаа газрууд":"Places with free spots tonight",
-"Өнөө орой":"Tonight","🔥 Өнөө орой сул байгаа газрууд":"🔥 Places with free spots tonight","🍱 Өнөөдрийн үдийн цай":"🍱 Today's lunch","Бар, клуб, караоке, лаунж, эвент заал —":"Bars, clubs, karaoke, lounges, event halls —","сул ширээ, өрөөгөө шууд хараад үнэгүй захиал.":"see free tables and rooms and book for free.","Залгаж асуух, дараалал хүлээх хэрэггүй. Бялуу, DJ, буцах жолоочоо хүртэл нэг дор.":"No calling around, no waiting. Add a cake, a DJ and a driver home in one go.","Ланч сет, үдийн хямдрал, сул ширээ —":"Lunch sets, midday deals, free tables —","бүгд нэг дор.":"all in one place.","Дараалалд зогсохгүй, ширээгээ урьдчилж аваад хамт олон, найзуудтайгаа үдийн цайгаа амар төлөвлө.":"Skip the queue: grab a table ahead and plan lunch with colleagues and friends.","Шинэ жилийн заалаа эрт ав":"Book your New Year hall early","12-р сарын сул өдрүүдийг заал бүрээр нэг дор хар. Эрт захиалбал сонголт илүү.":"See every hall's free December dates in one place. Book early for more choice.","Сул өдрөө олох →":"Find a free date →","🎁 Төрсөн өдөр үү? Бэлэгтэй газрууд энд":"🎁 Birthday? These places give gifts","Үнэгүй бялуу, кальян, нэмэлт цаг, хямдрал — төрсөн өдрөө тэмдэглэх хүнд бэлэг өгдөг газрууд.":"Free cake, hookah, extra time or discounts for whoever is celebrating.","Ланч сет":"Lunch set","Ази хоол":"Asian food","Үдийн хямдрал":"Lunch deals","ланчтай газар":"lunch spots","үдийн цаг":"lunch hours","Үдийн цайны цаг · одоо":"Lunchtime · now","газар нээлттэй":"places open","Үдийн цай 11:00-оос":"Lunch from 11:00","газар ширээ хүлээж байна":"places with tables waiting","Өнөөдрийн үдийн цай дууслаа · маргааш 11:00-оос":"Today's lunch is over · tomorrow from 11:00","Night club-д бүжиглэж буй хүмүүс":"People dancing in a night club","Караокед дуулж буй найзууд":"Friends singing karaoke","Бармен коктейль хийж байна":"Bartender pouring a cocktail","Кафены өдрийн хоолны ширээ":"Café lunch table","Солонгос шарсан мах":"Korean BBQ","Бууз":"Buuz dumplings","Өнөөдөр үдэд":"Lunchtime today","Кафе · өдрийн сет":"Café · lunch set","Солонгос ланч · шарсан мах":"Korean lunch · BBQ","Монгол хоол · бууз, цуйван":"Mongolian food · buuz, tsuivan","Өдрийн хоол сонгох":"Choose lunch","Кафе":"Café","Солонгос":"Korean","Монгол хоол":"Mongolian food","Ширээ захиалах →":"Book a table →","Өнөөдрийн өдрийн хоол":"Today's lunch","Өдрийн хоолтой":"Lunch at","Улаанбаатарын ресторан, кафе, гуанзны өдрийн хоолны сет, үдийн хямдралыг нэг дороос хараад ширээгээ үнэгүй захиална. Хамт ажиллагсад, найзуудтайгаа үдийн цайгаа төлөвлөөрэй.":"See lunch sets and midday deals from Ulaanbaatar's restaurants, cafés and canteens in one place and book a table for free. Plan lunch with colleagues and friends.","Үдийн цай кафе":"Lunchtime Café","Хүннү гуанз":"Hunnu Canteen","Бэнто хаус":"Bento House","Өглөөний цай · өдрийн хоол · кофе":"Breakfast · lunch · coffee","Монгол хоол · цуйван, бууз, хуушуур":"Mongolian food · tsuivan, buuz, khuushuur","Япон бэнто · рамэн · суши":"Japanese bento · ramen · sushi","Өдрийн сет 12:00–15:00 · 14,900₮":"Lunch set 12:00–15:00 · 14,900₮","Өдрийн хоол 11:00–15:00 · 12,000₮-өөс":"Lunch 11:00–15:00 · from 12,000₮","Бэнто сет 11:30–14:30 · 18,500₮":"Bento set 11:30–14:30 · 18,500₮","Бизнес ланч 12:00–14:00 · 19,900₮":"Business lunch 12:00–14:00 · 19,900₮","Үдийн цай 11:00–14:00 · 15% хямд":"Lunch 11:00–14:00 · 15% off","Өдрийн горим":"Day mode","Шөнийн горим":"Night mode","Өдөр, шөнийн горим":"Day / night mode","Өдөр / шөнө":"Day / night","Шөнө":"Night","таны захиалгад хамаарна":"applies to your booking","Арга хэмжээ":"Event","Танхим":"Hall","5-аар нэмэгдэнэ":"step of 5","түрээс":"rent","0.5л":"0.5 L","Бүртгэлийн хугацаа":"Registration period","Night club · DJ, бүжиг":"Night club · DJ, dancing","Бүртгэлийн хугацаа":"Registration period","хоног":"days","Мя":"Tu","Лх":"We","Пү":"Th","Ба":"Fr","Бя":"Sa","Ня":"Su","Да":"Mo","-д нэмээрэй":" to add","Google Maps, 2GIS гэх мэт ямар ч газрын зургийн холбоос болно. Google Maps дээр «Share» → «Copy link».":"Any map link works: Google Maps, 2GIS and so on. In Google Maps use «Share» → «Copy link».","(заавал биш)":"(optional)","заавал биш":"optional","Өрөө":"Room","4–6 хүнд":"for 4–6","8–10 хүнд":"for 8–10","2–4 хүнд":"for 2–4","4 хүнд":"for 4","ширээ":"tables","өрөө":"rooms","танхим":"halls","Захиалга үнэгүй":"Free booking",
+"Өнөө орой":"Tonight","Цэс харах":"View menu","Цэс":"Menu","QR код":"QR code","Газрын бүтэн цэс ↗":"Full venue menu ↗","QR цэс":"QR menu","Ширээн дээр тавихад үйлчлүүлэгч утсаараа уншуулаад цэсээ харна":"Put it on the table and guests scan it to see your menu","⬇ QR татах":"⬇ Download QR","🔗 Холбоос хуулах":"🔗 Copy link","✓ Хуулагдлаа":"✓ Copied","Үнэ газраас өөрчлөгдөж болно.":"Prices may change at the venue.","Жишээ цэс. Газар бүртгүүлэхдээ өөрийн цэсийн холбоосыг оруулна.":"Sample menu. Venues add their own menu link when they register.","Ширээ захиалах":"Book a table","📱 Үнэгүй QR цэс":"📱 Free QR menu","Ширээн дээрх QR-ыг уншуулахад таны цэс утсанд нээгдэнэ. Хэвлээд л тавина.":"Guests scan the QR on the table and your menu opens on their phone. Just print it.","⭐ Үнэлгээ, урамшуулал":"⭐ Reviews and deals","Үйлчлүүлэгчийн үнэлгээ, төрсөн өдрийн бэлэг, хямдрал тань сайтад харагдана.":"Customer reviews, birthday gifts and discounts show on the site.","Нэр, төрөл, утсаа":"Enter your name, type and phone.","бичнэ. Бусдыг нь хүссэнээрээ нэмнэ.":"Add the rest as you like.","Цаг, ширээ/өрөө, үнэ, урамшууллаа бөглөвөл газар тань бүрэн харагдана.":"Fill in hours, tables/rooms, prices and deals so your venue shows in full.","Бид шалгаад":"We check it and","24 цагийн дотор сайтад нийтэлнэ.":"publish it within 24 hours.","Байршил ба цаг":"Location and hours","Сонгох":"Choose","Нээх цаг":"Opens","Хаах цаг":"Closes","шөнө":"night","Товч тайлбар":"Short description","Жишээ: Амьд хөгжим · VIP өрөө · зогсоолтой":"Example: Live music · VIP room · parking","Ширээ, өрөө, үнэ":"Tables, rooms, prices","Төрөл бүрээр нэг мөр. Үнэ 0 бол «захиалга үнэгүй».":"One row per kind. Price 0 means free booking.","+ Мөр нэмэх":"+ Add row","Мөр хасах":"Remove row","Тоо":"Count","Үнэ ₮":"Price ₮","Урамшуулал ба ланч":"Deals and lunch","Хямдрал":"Discount","Өдрийн хоол (ланч)":"Lunch","Жишээ: Даваа–Пүрэв 18:00–20:00 цагт 20% хямд":"Example: Mon–Thu 18:00–20:00, 20% off","Жишээ: Бизнес ланч 12:00–14:00 · 15,900₮":"Example: Business lunch 12:00–14:00 · 15,900₮","Сайтад харагдахгүй, бид баталгаажуулахад залгана.":"Not shown on the site; we call to confirm.","Меню":"Menu","Онлайн менюгийн холбоос (Qmenu, Facebook, Google Drive…)":"Online menu link (Qmenu, Facebook, Google Drive…)","Зургаа 8505 0628 дугаар руу Messenger, Telegram-аар илгээвэл бид нэмж өгнө.":"Send your photos to 8505 0628 on Messenger or Telegram and we will add them.","Илгээсний дараа бид шалгаад 24 цагийн дотор сайтад нийтэлнэ.":"After you send it, we check and publish within 24 hours.","✓ Бүртгэлтэй":"✓ Registered","бүртгэгдлээ. Бид шалгаад 24 цагийн дотор сайтад нийтэлнэ. Асуух зүйл байвал":"is registered. We will check and publish it within 24 hours. If we have questions we will call","руу залгана.":".","Үндсэн танхим":"Main hall","Байршлын холбоос буруу байна. Google Maps-аас «Share» → «Copy link» хийгээд буулгана уу.":"The map link looks wrong. In Google Maps use «Share» → «Copy link» and paste it.","Илгээж чадсангүй. Интернэтээ шалгаад дахин оролдоно уу, эсвэл 8505 0628 руу залгана уу.":"Could not send. Check your connection and try again, or call 8505 0628.","🔥 Өнөө орой сул байгаа газрууд":"🔥 Places with free spots tonight","🍱 Өнөөдрийн үдийн цай":"🍱 Today's lunch","Бар, клуб, караоке, лаунж, эвент заал —":"Bars, clubs, karaoke, lounges, event halls —","сул ширээ, өрөөгөө шууд хараад үнэгүй захиал.":"see free tables and rooms and book for free.","Залгаж асуух, дараалал хүлээх хэрэггүй. Бялуу, DJ, буцах жолоочоо хүртэл нэг дор.":"No calling around, no waiting. Add a cake, a DJ and a driver home in one go.","Ланч сет, үдийн хямдрал, сул ширээ —":"Lunch sets, midday deals, free tables —","бүгд нэг дор.":"all in one place.","Дараалалд зогсохгүй, ширээгээ урьдчилж аваад хамт олон, найзуудтайгаа үдийн цайгаа амар төлөвлө.":"Skip the queue: grab a table ahead and plan lunch with colleagues and friends.","Шинэ жилийн заалаа эрт ав":"Book your New Year hall early","12-р сарын сул өдрүүдийг заал бүрээр нэг дор хар. Эрт захиалбал сонголт илүү.":"See every hall's free December dates in one place. Book early for more choice.","Сул өдрөө олох →":"Find a free date →","🎁 Төрсөн өдөр үү? Бэлэгтэй газрууд энд":"🎁 Birthday? These places give gifts","Үнэгүй бялуу, кальян, нэмэлт цаг, хямдрал — төрсөн өдрөө тэмдэглэх хүнд бэлэг өгдөг газрууд.":"Free cake, hookah, extra time or discounts for whoever is celebrating.","Ланч сет":"Lunch set","Ази хоол":"Asian food","Үдийн хямдрал":"Lunch deals","ланчтай газар":"lunch spots","үдийн цаг":"lunch hours","Үдийн цайны цаг · одоо":"Lunchtime · now","газар нээлттэй":"places open","Үдийн цай 11:00-оос":"Lunch from 11:00","газар ширээ хүлээж байна":"places with tables waiting","Өнөөдрийн үдийн цай дууслаа · маргааш 11:00-оос":"Today's lunch is over · tomorrow from 11:00","Night club-д бүжиглэж буй хүмүүс":"People dancing in a night club","Караокед дуулж буй найзууд":"Friends singing karaoke","Бармен коктейль хийж байна":"Bartender pouring a cocktail","Кафены өдрийн хоолны ширээ":"Café lunch table","Солонгос шарсан мах":"Korean BBQ","Бууз":"Buuz dumplings","Өнөөдөр үдэд":"Lunchtime today","Кафе · өдрийн сет":"Café · lunch set","Солонгос ланч · шарсан мах":"Korean lunch · BBQ","Монгол хоол · бууз, цуйван":"Mongolian food · buuz, tsuivan","Өдрийн хоол сонгох":"Choose lunch","Кафе":"Café","Солонгос":"Korean","Монгол хоол":"Mongolian food","Ширээ захиалах →":"Book a table →","Өнөөдрийн өдрийн хоол":"Today's lunch","Өдрийн хоолтой":"Lunch at","Улаанбаатарын ресторан, кафе, гуанзны өдрийн хоолны сет, үдийн хямдралыг нэг дороос хараад ширээгээ үнэгүй захиална. Хамт ажиллагсад, найзуудтайгаа үдийн цайгаа төлөвлөөрэй.":"See lunch sets and midday deals from Ulaanbaatar's restaurants, cafés and canteens in one place and book a table for free. Plan lunch with colleagues and friends.","Үдийн цай кафе":"Lunchtime Café","Хүннү гуанз":"Hunnu Canteen","Бэнто хаус":"Bento House","Өглөөний цай · өдрийн хоол · кофе":"Breakfast · lunch · coffee","Монгол хоол · цуйван, бууз, хуушуур":"Mongolian food · tsuivan, buuz, khuushuur","Япон бэнто · рамэн · суши":"Japanese bento · ramen · sushi","Өдрийн сет 12:00–15:00 · 14,900₮":"Lunch set 12:00–15:00 · 14,900₮","Өдрийн хоол 11:00–15:00 · 12,000₮-өөс":"Lunch 11:00–15:00 · from 12,000₮","Бэнто сет 11:30–14:30 · 18,500₮":"Bento set 11:30–14:30 · 18,500₮","Бизнес ланч 12:00–14:00 · 19,900₮":"Business lunch 12:00–14:00 · 19,900₮","Үдийн цай 11:00–14:00 · 15% хямд":"Lunch 11:00–14:00 · 15% off","Өдрийн горим":"Day mode","Шөнийн горим":"Night mode","Өдөр, шөнийн горим":"Day / night mode","Өдөр / шөнө":"Day / night","Шөнө":"Night","таны захиалгад хамаарна":"applies to your booking","Арга хэмжээ":"Event","Танхим":"Hall","5-аар нэмэгдэнэ":"step of 5","түрээс":"rent","0.5л":"0.5 L","Бүртгэлийн хугацаа":"Registration period","Night club · DJ, бүжиг":"Night club · DJ, dancing","Бүртгэлийн хугацаа":"Registration period","хоног":"days","Мя":"Tu","Лх":"We","Пү":"Th","Ба":"Fr","Бя":"Sa","Ня":"Su","Да":"Mo","-д нэмээрэй":" to add","Google Maps, 2GIS гэх мэт ямар ч газрын зургийн холбоос болно. Google Maps дээр «Share» → «Copy link».":"Any map link works: Google Maps, 2GIS and so on. In Google Maps use «Share» → «Copy link».","(заавал биш)":"(optional)","заавал биш":"optional","Өрөө":"Room","4–6 хүнд":"for 4–6","8–10 хүнд":"for 8–10","2–4 хүнд":"for 2–4","4 хүнд":"for 4","ширээ":"tables","өрөө":"rooms","танхим":"halls","Захиалга үнэгүй":"Free booking",
 "хаана":"going",
 "цугларах вэ?":"tonight?",
 "Прототип · газрын нэр, үнэ, сул цаг бүгд жишээ өгөгдөл":"Prototype · venue names, prices and free times are sample data",
