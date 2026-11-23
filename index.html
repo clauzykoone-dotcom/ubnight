@@ -175,6 +175,15 @@ button{cursor:pointer}
 .demo-note{font-size:13px;color:var(--muted);background:var(--accent-soft);border-radius:12px;padding:10px 14px;margin:0 0 14px}
 .demo-note a{color:var(--accent);font-weight:700;text-decoration:none;white-space:nowrap}
 .opennow{color:var(--ok);font-weight:700}
+.rvs{color:var(--gold);font-weight:700}
+.reviews{margin-top:22px;border-top:1px solid var(--line,rgba(127,127,127,.25));padding-top:18px;display:grid;gap:12px}
+.reviews h4{margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.reviews h4 small{font-weight:600;color:var(--muted)}
+.rv{border-radius:12px;padding:10px 12px;background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.rv b{font-size:14px}.rv .st{color:var(--gold);letter-spacing:1px}.rv p{margin:4px 0 0;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.rv time{font-size:12px;color:var(--muted)}
+.rvform{display:grid;gap:8px}.rvform textarea{min-height:70px;resize:vertical}
+.rvstars{display:flex;gap:4px}.rvstars button{font-size:26px;line-height:1;background:none;border:0;padding:2px;color:var(--muted);cursor:pointer}.rvstars button.on{color:var(--gold)}
+.rvform .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .install{display:none}.install.on{display:inline-flex}
 .err{color:var(--accent);font-size:13px;font-weight:600}
 .form input[aria-invalid="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
@@ -772,6 +781,50 @@ function dayChips(cur,attr){
   return chips+`<label class="pick${on?' on':''}">${on?esc(WD[DAYS[cur].getDay()])+' сонгосон':'📅 Өөр өдөр'}<input type="date" data-pick="${attr}" min="${iso(DAYS[0])}" max="${maxDate()}" value="${on?iso(DAYS[cur]):''}" aria-label="Сар, өдөр сонгох"><small>сар, өдрөө сонго</small></label>`;
 }
 function renderDays(el,cur,attr){el.innerHTML=dayChips(cur,attr)}
+/* customer reviews: Google Sheet + Apps Script web app (reviews/Code.gs).
+   New reviews arrive as «pending»; only rows the owner marks «approved» in the sheet are shown here. */
+const REVIEWS_URL='https://script.google.com/macros/s/AKfycbzQ4Zj3Yb2wDIY4czSAK0VbORZuVZvEPrlVfeSfy0qU1T8NG_G4BpMp-VfZBC55g6hHIw/exec';
+let RSUM={},RVNODE=null;const RV={};
+const stars5=n=>'★'.repeat(n)+'☆'.repeat(5-n);
+const rvDone=id=>{try{return localStorage.getItem('zahialya.rv.'+id)==='1'}catch(_){return false}};
+function loadRSum(){if(!REVIEWS_URL)return;fetch(REVIEWS_URL).then(r=>r.json()).then(j=>{if(j&&j.ok){RSUM=j.summary||{};renderGrid()}}).catch(()=>{})}
+function rvList(v){
+  const box=RVNODE&&RVNODE.querySelector('.rvlist'),sm=RVNODE&&RVNODE.querySelector('.rvsum');if(!box)return;
+  const a=RV[v.id];
+  if(!REVIEWS_URL){box.innerHTML='<div class="hint">Үнэлгээний хэсэг удахгүй нээгдэнэ.</div>';return}
+  if(!a){box.innerHTML='<div class="hint">Уншиж байна…</div>';return}
+  if(sm)sm.textContent=a.length?`★ ${(a.reduce((x,r)=>x+r.stars,0)/a.length).toFixed(1)} · ${a.length} үнэлгээ`:'';
+  box.innerHTML=a.length?a.slice(0,10).map(r=>`<div class="rv"><b>${esc(r.name)}</b> <span class="st" aria-label="${r.stars} од">${stars5(r.stars)}</span> <time>${esc((r.t||'').slice(0,10).replace(/-/g,'.'))}</time>${r.text?`<p>${esc(r.text)}</p>`:''}</div>`).join(''):'<div class="hint">Одоогоор үнэлгээ алга. Анхны үнэлгээг та үлдээгээрэй.</div>';
+}
+function loadRV(v){if(!v)return;if(!REVIEWS_URL){rvList(v);return}
+  fetch(REVIEWS_URL+'?venue='+encodeURIComponent(v.id)).then(r=>r.json()).then(j=>{RV[v.id]=(j&&j.reviews)||[];rvList(v)}).catch(()=>{RV[v.id]=[];rvList(v)})}
+function rvNode(v){
+  const n=document.createElement('section');n.className='reviews';n.dataset.vid=v.id;n.setAttribute('aria-label','Үйлчлүүлэгчийн үнэлгээ');
+  n.innerHTML=`<h4>Үйлчлүүлэгчийн үнэлгээ <small class="rvsum"></small></h4><div class="rvlist"></div>`+
+    (rvDone(v.id)?'<div class="hint">Баярлалаа! Таны үнэлгээг шалгаад нийтэлнэ.</div>':
+    `<form class="rvform" novalidate><b>Үнэлгээ үлдээх</b>
+      <div class="rvstars" role="radiogroup" aria-label="Од">${[1,2,3,4,5].map(i=>`<button type="button" role="radio" aria-checked="false" data-rvstar="${i}" aria-label="${i} од">★</button>`).join('')}</div>
+      <input class="field" name="name" maxlength="40" placeholder="Таны нэр" autocomplete="given-name" aria-label="Таны нэр">
+      <textarea class="field" name="text" maxlength="600" placeholder="Сэтгэгдэл (заавал биш)" aria-label="Сэтгэгдэл"></textarea>
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="err" role="alert" hidden></div>
+      <button class="ghost" type="submit">Илгээх</button>
+      <div class="hint">Үнэлгээ шалгагдсаны дараа нийтлэгдэнэ.</div></form>`);
+  return n;
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-rvstar]');if(!b)return;const f=b.closest('.rvform'),k=+b.dataset.rvstar;f.dataset.stars=k;
+  f.querySelectorAll('[data-rvstar]').forEach(x=>{const on=+x.dataset.rvstar<=k;x.classList.toggle('on',on);x.setAttribute('aria-checked',String(+x.dataset.rvstar===k))})});
+document.addEventListener('submit',async e=>{const f=e.target.closest('.rvform');if(!f)return;e.preventDefault();
+  const er=f.querySelector('.err'),vid=f.closest('.reviews').dataset.vid,stars=+(f.dataset.stars||0),name=f.querySelector('[name=name]').value.trim(),text=f.querySelector('[name=text]').value.trim();
+  const bad=m=>{er.textContent=m;er.hidden=false};
+  if(!REVIEWS_URL)return bad('Үнэлгээний хэсэг удахгүй нээгдэнэ.');
+  if(!stars)return bad('Хэдэн од өгөхөө сонгоно уу.');if(!name)return bad('Нэрээ бичнэ үү.');
+  er.hidden=true;const btn=f.querySelector('[type=submit]');btn.disabled=true;btn.textContent='Илгээж байна…';
+  try{await fetch(REVIEWS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({venue:vid,name,stars,text,hp:f.querySelector('[name=website]').value})});
+    try{localStorage.setItem('zahialya.rv.'+vid,'1')}catch(_){}
+    f.outerHTML='<div class="hint" role="status">Баярлалаа! Таны үнэлгээг шалгаад нийтэлнэ.</div>';
+  }catch(_){btn.disabled=false;btn.textContent='Илгээх';bad('Илгээж чадсангүй. Интернэтээ шалгаад дахин оролдоно уу.')}
+});
 /* open right now: venue hours run past midnight as 24–28, so 00:00–04:59 counts as 24–28 */
 function openNow(v){const d=new Date();let h=d.getHours()+d.getMinutes()/60;if(h<5)h+=24;return h>=v.open&&h<v.close}
 function renderGrid(){
@@ -795,7 +848,7 @@ function renderGrid(){
         <div class="meta">${esc(v.tagline)}</div>
         ${v.type==='hall'?`<span class="capb">👥 ${maxCap(v)} хүртэл хүн</span>`:''}
         ${badgesOf(v)}
-        <div class="meta">${v.district==='—'?'Байршил оруулаагүй':esc(v.district)+' дүүрэг'} · ${hl(v.open)}–${hl(v.close)}${openNow(v)?' · <span class="opennow">● Одоо нээлттэй</span>':''}</div>
+        <div class="meta">${v.district==='—'?'Байршил оруулаагүй':esc(v.district)+' дүүрэг'} · ${hl(v.open)}–${hl(v.close)}${openNow(v)?' · <span class="opennow">● Одоо нээлттэй</span>':''}${RSUM[v.id]?` · <span class="rvs">★ ${RSUM[v.id].avg} <span class="mono">(${RSUM[v.id].n})</span></span>`:''}</div>
         <div class="row"><span class="price mono">${v.type==='hall'?fmt(PKG[0].p)+'<small> /хүнээс</small>':v.type==='karaoke'?fmt(minPrice(v))+'<small> /цаг</small>':'<small>Захиалга үнэгүй</small>'}</span><span class="free ${cls}">${ftxt}</span></div>
       </div></button></div>`;
   }).join('');
@@ -809,6 +862,7 @@ function renderBrowse(){renderPromo();const hv=document.getElementById('hsVenues
 
 /* ---------- booking sheet ---------- */
 function openSheet(vid,ds,ev,guests){
+  RVNODE=rvNode(vById(vid));loadRV(vById(vid));
   const v=vById(vid),hall=v.type==='hall',u0=v.units.find(u=>u.cap>=(guests||0))||v.units[0];
   S.d={vid,uid:u0.id,di:ds?dayIndex(ds):S.di,h:null,dur:2,guests:Math.min(guests||(hall?40:4),u0.cap),items:{},svc:{},pkg:hall?'std':null,ev:hall?(ev||EVENTS[1]):null,name:'',phone:'',age:false,err:'',errField:'',done:null};
   S.opener=document.activeElement;
@@ -896,6 +950,7 @@ function renderSheet(){
       ${d.err?`<div class="err" id="sheetErr" role="alert">${esc(d.err)}</div>`:''}
       <button class="cta" data-submit>${d.h===null?'Цагаа сонгоно уу':'Үнэгүй захиалах'}</button>
     </div>`;
+  if(RVNODE&&RVNODE.dataset.vid===v.id)$('#sheet .sheet-body')?.appendChild(RVNODE);
 }
 function renderDone(){
   const b=S.d.done,v=vById(b.vid),u=v.units.find(x=>x.id===b.uid);
@@ -1231,6 +1286,7 @@ $('#joinForm').addEventListener('submit',e=>{
 });
 syncHall();
 render();
+loadRSum();
 {const m=location.hash.match(/^#v=([\w-]+)/);if(m&&vById(m[1]))openSheet(m[1])}
 /* installable app (PWA): register the service worker on https only, offer an install button when the browser allows it */
 if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
