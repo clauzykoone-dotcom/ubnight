@@ -105,8 +105,8 @@ button{cursor:pointer}
   radial-gradient(30% 40% at 55% 110%,rgba(74,222,128,.35),transparent 70%),
   linear-gradient(0deg,rgba(20,6,40,.28),rgba(20,6,40,.28));animation:drift 14s ease-in-out infinite alternate}
 @keyframes drift{to{transform:translate(-4%,3%) scale(1.08)}}
-:root[data-theme="light"] .hero{background:linear-gradient(125deg,#0284C7 0%,#0EA5E9 30%,#F59E0B 72%,#F97316 100%);box-shadow:0 24px 60px rgba(14,165,233,.28)}
-@media (prefers-color-scheme:light){:root:not([data-theme]) .hero{background:linear-gradient(125deg,#0284C7 0%,#0EA5E9 30%,#F59E0B 72%,#F97316 100%);box-shadow:0 24px 60px rgba(14,165,233,.28)}}
+:root[data-theme="light"] .hero{background:linear-gradient(130deg,#0369A1 0%,#0EA5E9 34%,#F472B6 72%,#FB923C 100%);box-shadow:0 24px 60px rgba(14,165,233,.28)}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .hero{background:linear-gradient(130deg,#0369A1 0%,#0EA5E9 34%,#F472B6 72%,#FB923C 100%);box-shadow:0 24px 60px rgba(14,165,233,.28)}}
 .dshot .dsc{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:6px;background:radial-gradient(60% 50% at 75% 20%,rgba(255,255,255,.55),transparent 70%),linear-gradient(160deg,var(--a),var(--b));opacity:0;transform:scale(1.08);transition:opacity .55s ease,transform 1.2s ease}
 .dshot .dsc.on{opacity:1;transform:scale(1)}
 .hvis .dshot::after{background:linear-gradient(0deg,rgba(15,23,42,.55),transparent 38%)}
@@ -115,12 +115,17 @@ button{cursor:pointer}
 .dshot .sun{position:absolute;right:22px;top:18px;width:46px;height:46px;border-radius:50%;background:#FDE047;box-shadow:0 0 0 8px rgba(253,224,71,.35),0 0 40px 12px rgba(253,224,71,.55);animation:dsun 4s ease-in-out infinite}
 @keyframes dfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @keyframes dsun{0%,100%{box-shadow:0 0 0 8px rgba(253,224,71,.35),0 0 40px 12px rgba(253,224,71,.55)}50%{box-shadow:0 0 0 14px rgba(253,224,71,.2),0 0 60px 18px rgba(253,224,71,.6)}}
+:root[data-theme="light"] .hero::before{background:radial-gradient(38% 55% at 88% 8%,rgba(253,224,71,.55),transparent 70%),radial-gradient(40% 50% at 8% 100%,rgba(255,255,255,.25),transparent 70%),linear-gradient(0deg,rgba(15,23,42,.18),rgba(15,23,42,.18))}
+@media (prefers-color-scheme:light){:root:not([data-theme]) .hero::before{background:radial-gradient(38% 55% at 88% 8%,rgba(253,224,71,.55),transparent 70%),radial-gradient(40% 50% at 8% 100%,rgba(255,255,255,.25),transparent 70%),linear-gradient(0deg,rgba(15,23,42,.18),rgba(15,23,42,.18))}}
+.lunchnow{display:inline-flex;align-items:center;gap:8px;justify-self:start;font-size:14px;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);border-radius:12px;padding:8px 12px}
+.lunchnow:empty{display:none}
 .hvis .live.day i{background:#F59E0B;box-shadow:0 0 0 3px rgba(245,158,11,.35)}
 .hero .tag{justify-self:start;display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);border-radius:999px;padding:6px 12px}
 .hero .tag i{width:8px;height:8px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 4px rgba(74,222,128,.3);animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{50%{box-shadow:0 0 0 8px rgba(74,222,128,0)}}
 .hero h1{font-family:var(--display);font-weight:800;font-size:clamp(32px,6.2vw,64px);line-height:1;letter-spacing:-.04em;margin:0;text-wrap:balance;max-width:14ch;text-shadow:0 4px 24px rgba(40,0,60,.35)}
 .hero h1 em{font-style:normal;display:inline-block;padding:0 .18em;border-radius:.25em;background:#FDE047;color:#3B0764;transform:rotate(-3deg);text-shadow:none}
+.hero p b{color:#FDE047;font-weight:800}
 .hero p{margin:0;max-width:52ch;font-size:16px;font-weight:500;color:rgba(255,255,255,.95);text-shadow:0 1px 10px rgba(40,0,60,.35)}
 .hero .demo-note{color:#FEF08A}
 .quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
@@ -514,11 +519,11 @@ button{cursor:pointer}
           <button type="button" data-hd="mongol" aria-pressed="false">🥟 Монгол хоол</button>
         </div>
       </div>
-      <span class="tag only-night"><i></i>Өнөө орой сул байгаа газрууд</span><span class="tag only-day"><i></i>Өнөөдрийн өдрийн хоол</span>
+      <span class="tag only-night"><i></i>🔥 Өнөө орой сул байгаа газрууд</span><span class="tag only-day"><i></i>🍱 Өнөөдрийн үдийн цай</span>
       <h1 class="only-night"><span data-en="Where are we">Өнөө орой</span> <em data-en="going">хаана</em> <span data-en="tonight?">цугларах вэ?</span></h1><h1 class="only-day"><span data-en="What's for">Өнөөдөр үдэд</span> <em data-en="lunch">юу</em> <span data-en="today?">идэх вэ?</span></h1>
-      <p class="only-night">Улаанбаатарын бар, ресторан, караоке, лаунж, стрип клаб, эвент заалуудыг нэг дороос хараад сул өрөө, ширээ, танхимаа сонгоно. Захиалга үнэгүй, төлбөрөө газар дээр нь төлнө. Бялуу, чимэглэл, DJ, хөтлөгч, буцахдаа жолоочийг хүртэл хамт захиална.</p>
-      <p class="only-day">Улаанбаатарын ресторан, кафе, гуанзны өдрийн хоолны сет, үдийн хямдралыг нэг дороос хараад ширээгээ үнэгүй захиална. Хамт ажиллагсад, найзуудтайгаа үдийн цайгаа төлөвлөөрэй.</p>
-      <div class="quick" role="group" aria-label="Шууд сонгох">
+      <p class="only-night">Бар, клуб, караоке, лаунж, эвент заал — <b>сул ширээ, өрөөгөө шууд хараад үнэгүй захиал.</b> Залгаж асуух, дараалал хүлээх хэрэггүй. Бялуу, DJ, буцах жолоочоо хүртэл нэг дор.</p>
+      <p class="only-day">Ланч сет, үдийн хямдрал, сул ширээ — <b>бүгд нэг дор.</b> Дараалалд зогсохгүй, ширээгээ урьдчилж аваад хамт олон, найзуудтайгаа үдийн цайгаа амар төлөвлө.</p>
+      <div class="quick only-night" role="group" aria-label="Шууд сонгох">
         <button data-type="karaoke" aria-pressed="false">🎤 Караоке</button>
         <button data-type="bar" aria-pressed="false">🍻 Бар</button>
         <button data-type="restaurant" aria-pressed="false">🍽️ Ресторан</button>
@@ -526,17 +531,26 @@ button{cursor:pointer}
         <button data-type="strip" aria-pressed="false">💃 Стрип клаб</button>
         <button data-type="hall" aria-pressed="false">🎉 Эвент заал</button>
       </div>
-      <div class="hstats"><span><b id="hsVenues">—</b>газар</span><span><b>6</b>төрөл</span><span><b>0₮</b>захиалгын төлбөр</span></div>
+      <div class="hstats only-night"><span><b id="hsVenues">—</b>газар</span><span><b>6</b>төрөл</span><span><b>0₮</b>захиалгын төлбөр</span></div>
+      <div class="quick only-day" role="group" aria-label="Өдрийн хоол сонгох">
+        <button data-lq="ланч|сет" aria-pressed="false">🍱 Ланч сет</button>
+        <button data-lq="монгол" aria-pressed="false">🥟 Монгол хоол</button>
+        <button data-lq="солонгос|япон|рамэн" aria-pressed="false">🍜 Ази хоол</button>
+        <button data-lq="кофе|кафе|өглөөний" aria-pressed="false">☕ Кафе</button>
+        <button data-lq="хямд|%" aria-pressed="false">🏷️ Үдийн хямдрал</button>
+      </div>
+      <div class="lunchnow only-day" id="lunchNow" aria-live="polite"></div>
+      <div class="hstats only-day"><span><b id="hsLunch">—</b>ланчтай газар</span><span><b>11–15</b>үдийн цаг</span><span><b>0₮</b>захиалгын төлбөр</span></div>
       <div class="demo-note">Прототип · газрын нэр, үнэ, сул цаг бүгд жишээ өгөгдөл</div>
     </div>
     <div class="nyb">
       <div class="ic" aria-hidden="true">🎄</div>
-      <div class="txt"><b>Шинэ жилийн хүлээн авалт</b><span>Байгууллага, найз нөхөд, ангийнхантайгаа. 12-р сарын сул өдрүүдийг заал бүрээр нэг дор харна.</span></div>
-      <button data-view="ny">Сул өдрүүдийг харах →</button>
+      <div class="txt"><b>Шинэ жилийн заалаа эрт ав</b><span>12-р сарын сул өдрүүдийг заал бүрээр нэг дор хар. Эрт захиалбал сонголт илүү.</span></div>
+      <button data-view="ny">Сул өдрөө олох →</button>
     </div>
     <section class="promo-sec" aria-labelledby="promoTitle">
-      <h2 id="promoTitle">🎁 Урамшуулал ба төрсөн өдрийн бэлэг</h2>
-      <p class="hint">Эвент заал, ресторан, караокены хөнгөлөлт болон төрсөн өдрийн хүнд бэлэг өгдөг газрууд.</p>
+      <h2 id="promoTitle">🎁 Төрсөн өдөр үү? Бэлэгтэй газрууд энд</h2>
+      <p class="hint">Үнэгүй бялуу, кальян, нэмэлт цаг, хямдрал — төрсөн өдрөө тэмдэглэх хүнд бэлэг өгдөг газрууд.</p>
       <div class="promo-tabs" role="group" aria-label="Урамшууллын төрөл">
         <button data-pk="all" aria-pressed="true">Бүгд</button>
         <button data-pk="bday" aria-pressed="false">🎂 Төрсөн өдрийн бэлэг</button>
@@ -908,10 +922,14 @@ document.addEventListener('submit',async e=>{const f=e.target.closest('.rvform')
 });
 /* open right now: venue hours run past midnight as 24–28, so 00:00–04:59 counts as 24–28 */
 function openNow(v){const d=new Date();let h=d.getHours()+d.getMinutes()/60;if(h<5)h+=24;return h>=v.open&&h<v.close}
+let LQ='';
 const isDay=()=>(document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'))==='light';
+function lunchNow(){const el=document.getElementById('lunchNow');if(!el)return;const L=V.filter(v=>v.lunch),open=L.filter(openNow).length,h=new Date().getHours();
+  const hs=document.getElementById('hsLunch');if(hs)hs.textContent=L.length;
+  el.textContent=h>=11&&h<15?`⏰ Үдийн цайны цаг · одоо ${open} газар нээлттэй`:h<11?`⏰ Үдийн цай 11:00-оос · ${L.length} газар ширээ хүлээж байна`:`🌇 Өнөөдрийн үдийн цай дууслаа · маргааш 11:00-оос`}
 function renderGrid(){
-  const q=S.q.trim().toLowerCase(),day=isDay();
-  const list=V.filter(v=>(S.type==='all'?(!day||v.lunch):v.type===S.type)&&(S.district==='all'||v.district===S.district)&&(!q||(v.name+' '+v.tagline+' '+(TN[v.type]||'')).toLowerCase().includes(q))&&(!S.openOnly||openNow(v))&&(!S.freeOnly||freeTonight(v,S.di)>0)&&(!S.favOnly||S.favs.includes(v.id))&&(!S.bdayOnly||pr0(v).bday)&&(!S.dealOnly||pr0(v).deal));
+  const q=S.q.trim().toLowerCase(),day=isDay();lunchNow();
+  const list=V.filter(v=>(S.type==='all'?(!day||v.lunch):v.type===S.type)&&(S.district==='all'||v.district===S.district)&&(!q||(v.name+' '+v.tagline+' '+(TN[v.type]||'')).toLowerCase().includes(q))&&(!day||!LQ||new RegExp(LQ,'i').test(v.name+' '+v.tagline+' '+(v.lunch||'')))&&(!S.openOnly||openNow(v))&&(!S.freeOnly||freeTonight(v,S.di)>0)&&(!S.favOnly||S.favs.includes(v.id))&&(!S.bdayOnly||pr0(v).bday)&&(!S.dealOnly||pr0(v).deal));
   const pr=v=>v.type==='hall'?PKG[0].p:minPrice(v)||0;
   if(S.sort==='free')list.sort((a,b)=>freeTonight(b,S.di)-freeTonight(a,S.di));
   else if(S.sort==='price')list.sort((a,b)=>pr(a)-pr(b));
@@ -1180,6 +1198,7 @@ document.addEventListener('click',e=>{
   if(ds.view){S.view=ds.view;S.cancelArm=null;render();window.scrollTo(0,0);return}
   if(ds.day!==undefined){S.di=+ds.day;renderBrowse();return}
   if(ds.dday!==undefined){S.dashDi=+ds.dday;renderDash();return}
+  if(ds.lq!==undefined){const on=t.getAttribute('aria-pressed')!=='true';LQ=on?ds.lq:'';document.querySelectorAll('[data-lq]').forEach(b=>b.setAttribute('aria-pressed',String(on&&b===t)));S.type='all';renderGrid();document.getElementById('resultCount').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});return}
   if(ds.type){S.type=ds.type;document.querySelectorAll('[data-type]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.type===ds.type)));renderGrid();if(t.closest('.quick'))document.getElementById('resultCount').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});return}
   if(ds.fav){S.favs=S.favs.includes(ds.fav)?S.favs.filter(x=>x!==ds.fav):[...S.favs,ds.fav];saveFavs();renderGrid();const nb=document.querySelector(`[data-fav="${ds.fav}"]`);if(nb)nb.focus();return}
   if(ds.nyt){S.nyT=ds.nyt;document.querySelectorAll('[data-nyt]').forEach(b=>b.setAttribute('aria-pressed',String(b===t)));renderNY();return}
@@ -1393,7 +1412,7 @@ window.UBN_EN = {
 "UB Night — нүүр":"UB Night — home",
 "Улаанбаатарын бар, ресторан, караоке, лаунж, стрип клаб, эвент заалуудыг нэг дороос хараад сул өрөө, ширээ, танхимаа сонгоно. Захиалга үнэгүй, төлбөрөө газар дээр нь төлнө. Бялуу, чимэглэл, DJ, хөтлөгч, буцахдаа жолоочийг хүртэл хамт захиална":"See Ulaanbaatar's bars, restaurants, karaoke, lounges, strip clubs and event halls in one place and pick a free room, table or hall. Booking is free and you pay at the venue. Add a cake, decorations, a DJ, an MC and even a driver home in the same booking",
 "Өнөө орой сул байгаа газрууд":"Places with free spots tonight",
-"Өнөө орой":"Tonight","Night club-д бүжиглэж буй хүмүүс":"People dancing in a night club","Караокед дуулж буй найзууд":"Friends singing karaoke","Бармен коктейль хийж байна":"Bartender pouring a cocktail","Кафены өдрийн хоолны ширээ":"Café lunch table","Солонгос шарсан мах":"Korean BBQ","Бууз":"Buuz dumplings","Өнөөдөр үдэд":"Lunchtime today","Кафе · өдрийн сет":"Café · lunch set","Солонгос ланч · шарсан мах":"Korean lunch · BBQ","Монгол хоол · бууз, цуйван":"Mongolian food · buuz, tsuivan","Өдрийн хоол сонгох":"Choose lunch","Кафе":"Café","Солонгос":"Korean","Монгол хоол":"Mongolian food","Ширээ захиалах →":"Book a table →","Өнөөдрийн өдрийн хоол":"Today's lunch","Өдрийн хоолтой":"Lunch at","Улаанбаатарын ресторан, кафе, гуанзны өдрийн хоолны сет, үдийн хямдралыг нэг дороос хараад ширээгээ үнэгүй захиална. Хамт ажиллагсад, найзуудтайгаа үдийн цайгаа төлөвлөөрэй.":"See lunch sets and midday deals from Ulaanbaatar's restaurants, cafés and canteens in one place and book a table for free. Plan lunch with colleagues and friends.","Үдийн цай кафе":"Lunchtime Café","Хүннү гуанз":"Hunnu Canteen","Бэнто хаус":"Bento House","Өглөөний цай · өдрийн хоол · кофе":"Breakfast · lunch · coffee","Монгол хоол · цуйван, бууз, хуушуур":"Mongolian food · tsuivan, buuz, khuushuur","Япон бэнто · рамэн · суши":"Japanese bento · ramen · sushi","Өдрийн сет 12:00–15:00 · 14,900₮":"Lunch set 12:00–15:00 · 14,900₮","Өдрийн хоол 11:00–15:00 · 12,000₮-өөс":"Lunch 11:00–15:00 · from 12,000₮","Бэнто сет 11:30–14:30 · 18,500₮":"Bento set 11:30–14:30 · 18,500₮","Бизнес ланч 12:00–14:00 · 19,900₮":"Business lunch 12:00–14:00 · 19,900₮","Үдийн цай 11:00–14:00 · 15% хямд":"Lunch 11:00–14:00 · 15% off","Өдрийн горим":"Day mode","Шөнийн горим":"Night mode","Өдөр, шөнийн горим":"Day / night mode","Өдөр / шөнө":"Day / night","Шөнө":"Night","таны захиалгад хамаарна":"applies to your booking","Арга хэмжээ":"Event","Танхим":"Hall","5-аар нэмэгдэнэ":"step of 5","түрээс":"rent","0.5л":"0.5 L","Бүртгэлийн хугацаа":"Registration period","Night club · DJ, бүжиг":"Night club · DJ, dancing","Бүртгэлийн хугацаа":"Registration period","хоног":"days","Мя":"Tu","Лх":"We","Пү":"Th","Ба":"Fr","Бя":"Sa","Ня":"Su","Да":"Mo","-д нэмээрэй":" to add","Google Maps, 2GIS гэх мэт ямар ч газрын зургийн холбоос болно. Google Maps дээр «Share» → «Copy link».":"Any map link works: Google Maps, 2GIS and so on. In Google Maps use «Share» → «Copy link».","(заавал биш)":"(optional)","заавал биш":"optional","Өрөө":"Room","4–6 хүнд":"for 4–6","8–10 хүнд":"for 8–10","2–4 хүнд":"for 2–4","4 хүнд":"for 4","ширээ":"tables","өрөө":"rooms","танхим":"halls","Захиалга үнэгүй":"Free booking",
+"Өнөө орой":"Tonight","🔥 Өнөө орой сул байгаа газрууд":"🔥 Places with free spots tonight","🍱 Өнөөдрийн үдийн цай":"🍱 Today's lunch","Бар, клуб, караоке, лаунж, эвент заал —":"Bars, clubs, karaoke, lounges, event halls —","сул ширээ, өрөөгөө шууд хараад үнэгүй захиал.":"see free tables and rooms and book for free.","Залгаж асуух, дараалал хүлээх хэрэггүй. Бялуу, DJ, буцах жолоочоо хүртэл нэг дор.":"No calling around, no waiting. Add a cake, a DJ and a driver home in one go.","Ланч сет, үдийн хямдрал, сул ширээ —":"Lunch sets, midday deals, free tables —","бүгд нэг дор.":"all in one place.","Дараалалд зогсохгүй, ширээгээ урьдчилж аваад хамт олон, найзуудтайгаа үдийн цайгаа амар төлөвлө.":"Skip the queue: grab a table ahead and plan lunch with colleagues and friends.","Шинэ жилийн заалаа эрт ав":"Book your New Year hall early","12-р сарын сул өдрүүдийг заал бүрээр нэг дор хар. Эрт захиалбал сонголт илүү.":"See every hall's free December dates in one place. Book early for more choice.","Сул өдрөө олох →":"Find a free date →","🎁 Төрсөн өдөр үү? Бэлэгтэй газрууд энд":"🎁 Birthday? These places give gifts","Үнэгүй бялуу, кальян, нэмэлт цаг, хямдрал — төрсөн өдрөө тэмдэглэх хүнд бэлэг өгдөг газрууд.":"Free cake, hookah, extra time or discounts for whoever is celebrating.","Ланч сет":"Lunch set","Ази хоол":"Asian food","Үдийн хямдрал":"Lunch deals","ланчтай газар":"lunch spots","үдийн цаг":"lunch hours","Үдийн цайны цаг · одоо":"Lunchtime · now","газар нээлттэй":"places open","Үдийн цай 11:00-оос":"Lunch from 11:00","газар ширээ хүлээж байна":"places with tables waiting","Өнөөдрийн үдийн цай дууслаа · маргааш 11:00-оос":"Today's lunch is over · tomorrow from 11:00","Night club-д бүжиглэж буй хүмүүс":"People dancing in a night club","Караокед дуулж буй найзууд":"Friends singing karaoke","Бармен коктейль хийж байна":"Bartender pouring a cocktail","Кафены өдрийн хоолны ширээ":"Café lunch table","Солонгос шарсан мах":"Korean BBQ","Бууз":"Buuz dumplings","Өнөөдөр үдэд":"Lunchtime today","Кафе · өдрийн сет":"Café · lunch set","Солонгос ланч · шарсан мах":"Korean lunch · BBQ","Монгол хоол · бууз, цуйван":"Mongolian food · buuz, tsuivan","Өдрийн хоол сонгох":"Choose lunch","Кафе":"Café","Солонгос":"Korean","Монгол хоол":"Mongolian food","Ширээ захиалах →":"Book a table →","Өнөөдрийн өдрийн хоол":"Today's lunch","Өдрийн хоолтой":"Lunch at","Улаанбаатарын ресторан, кафе, гуанзны өдрийн хоолны сет, үдийн хямдралыг нэг дороос хараад ширээгээ үнэгүй захиална. Хамт ажиллагсад, найзуудтайгаа үдийн цайгаа төлөвлөөрэй.":"See lunch sets and midday deals from Ulaanbaatar's restaurants, cafés and canteens in one place and book a table for free. Plan lunch with colleagues and friends.","Үдийн цай кафе":"Lunchtime Café","Хүннү гуанз":"Hunnu Canteen","Бэнто хаус":"Bento House","Өглөөний цай · өдрийн хоол · кофе":"Breakfast · lunch · coffee","Монгол хоол · цуйван, бууз, хуушуур":"Mongolian food · tsuivan, buuz, khuushuur","Япон бэнто · рамэн · суши":"Japanese bento · ramen · sushi","Өдрийн сет 12:00–15:00 · 14,900₮":"Lunch set 12:00–15:00 · 14,900₮","Өдрийн хоол 11:00–15:00 · 12,000₮-өөс":"Lunch 11:00–15:00 · from 12,000₮","Бэнто сет 11:30–14:30 · 18,500₮":"Bento set 11:30–14:30 · 18,500₮","Бизнес ланч 12:00–14:00 · 19,900₮":"Business lunch 12:00–14:00 · 19,900₮","Үдийн цай 11:00–14:00 · 15% хямд":"Lunch 11:00–14:00 · 15% off","Өдрийн горим":"Day mode","Шөнийн горим":"Night mode","Өдөр, шөнийн горим":"Day / night mode","Өдөр / шөнө":"Day / night","Шөнө":"Night","таны захиалгад хамаарна":"applies to your booking","Арга хэмжээ":"Event","Танхим":"Hall","5-аар нэмэгдэнэ":"step of 5","түрээс":"rent","0.5л":"0.5 L","Бүртгэлийн хугацаа":"Registration period","Night club · DJ, бүжиг":"Night club · DJ, dancing","Бүртгэлийн хугацаа":"Registration period","хоног":"days","Мя":"Tu","Лх":"We","Пү":"Th","Ба":"Fr","Бя":"Sa","Ня":"Su","Да":"Mo","-д нэмээрэй":" to add","Google Maps, 2GIS гэх мэт ямар ч газрын зургийн холбоос болно. Google Maps дээр «Share» → «Copy link».":"Any map link works: Google Maps, 2GIS and so on. In Google Maps use «Share» → «Copy link».","(заавал биш)":"(optional)","заавал биш":"optional","Өрөө":"Room","4–6 хүнд":"for 4–6","8–10 хүнд":"for 8–10","2–4 хүнд":"for 2–4","4 хүнд":"for 4","ширээ":"tables","өрөө":"rooms","танхим":"halls","Захиалга үнэгүй":"Free booking",
 "хаана":"going",
 "цугларах вэ?":"tonight?",
 "Прототип · газрын нэр, үнэ, сул цаг бүгд жишээ өгөгдөл":"Prototype · venue names, prices and free times are sample data",
