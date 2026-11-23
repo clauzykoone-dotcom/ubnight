@@ -52,6 +52,20 @@ button{cursor:pointer}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:16px;padding-block:12px;flex-wrap:wrap}
 .brand{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.03em;margin-right:auto;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg)}
+.brand .logo-ic *{transform-box:fill-box;transform-origin:center}
+.brand .logo-ic circle[mask]{animation:ubnMoon 3.6s ease-in-out infinite}
+.brand .logo-ic g>path:first-of-type{animation:ubnStar 2.4s ease-in-out infinite}
+.brand .logo-ic g>circle:not([mask]){animation:ubnTwinkle 1.8s ease-in-out infinite}
+.brand .logo-ic g>circle:not([mask]):nth-of-type(3){animation-delay:.9s}
+.brand .logo-ic g>rect[width="1.6"]{animation:ubnWin 3s steps(1) infinite}
+.brand .logo-ic g>rect[width="1.6"]:nth-of-type(2n){animation-delay:.7s;animation-duration:4.2s}
+.brand .logo-ic g>rect[width="1.6"]:nth-of-type(3n){animation-delay:1.6s;animation-duration:2.6s}
+.brand .logo-ic g>rect[width="1.6"]:nth-of-type(5n){animation-delay:2.3s;animation-duration:5s}
+@keyframes ubnMoon{0%,100%{transform:translateY(0);filter:drop-shadow(0 0 1px #FDE047)}50%{transform:translateY(-1.5px);filter:drop-shadow(0 0 4px #FDE047)}}
+@keyframes ubnStar{0%,100%{transform:scale(1) rotate(0);opacity:1}50%{transform:scale(.55) rotate(45deg);opacity:.6}}
+@keyframes ubnTwinkle{0%,100%{opacity:.9}50%{opacity:.15}}
+@keyframes ubnWin{0%,60%{opacity:1}61%,80%{opacity:.15}81%,100%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.brand .logo-ic *{animation:none!important}}
 .brand .logo-ic{width:36px;height:36px;flex:0 0 auto;filter:drop-shadow(0 6px 14px rgba(219,39,119,.35))}
 .brand .neon{display:inline-block;animation:neon 4.5s infinite;filter:drop-shadow(0 0 2px rgba(255,92,147,.9)) drop-shadow(0 0 8px rgba(255,46,136,.7)) drop-shadow(0 0 18px rgba(251,146,60,.45))}
 @keyframes neon{
