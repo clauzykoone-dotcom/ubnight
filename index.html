@@ -517,14 +517,13 @@ button{cursor:pointer}
       <div class="feat"><b>Шинэ үйлчлүүлэгч</b><span>«Өнөө орой хаана очих вэ» гэж хайж буй хүмүүст таны газар харагдана.</span></div>
     </div>
     <div class="price-box">
-      <div><small>Бүртгэлийн хураамж</small><b>50,000₮</b><span>3 сар тутам · газар тутамд · дансаар шилжүүлнэ</span></div>
+      <div><small>Бүртгэлийн хураамж</small><b>Үнэгүй</b><span>Одоогоор газар бүртгүүлэх нь төлбөргүй</span></div>
       <ul><li>Захиалга тоогүй, шимтгэлгүй</li><li>Газрын самбар, захиалгын мэдэгдэл</li><li>Үйлчлүүлэгчээс төлбөр авахгүй</li></ul>
     </div>
     <h3 class="section-title" style="font-size:22px">Яаж эхлэх вэ</h3>
     <ol class="steps">
       <li>Доорх маягтыг бөглөнө.</li>
-      <li>50,000₮-ийг дансаар шилжүүлнэ. Гүйлгээний утгад бүртгэлийн кодоо (UBN-…) бичнэ. Тусламж: 8505 0628.</li>
-      <li>Бид төлбөр орсныг шалгаад 24 цагийн дотор бүртгэлийг баталгаажуулж, нийтэлнэ.</li>
+      <li>Бид мэдээллийг шалгаад 24 цагийн дотор бүртгэлийг баталгаажуулж, нийтэлнэ. Тусламж: 8505 0628.</li>
     </ol>
     <form class="join" id="joinForm" novalidate>
       <div class="seg who" role="group" aria-label="Бүртгүүлэгч">
@@ -1121,7 +1120,7 @@ function resetJoin(){
 }
 /* ---------- bank transfer, confirmed by the site owner ----------
    PAYTO: the site owner's receiving account (given by the user 2026-11-23). */
-const FEE=50000;
+const FEE=50000,FEE_ON=false; /* 2026-11-23: хураамжийг түр зогсоосон — FEE_ON=true болгоход дахин идэвхжинэ */
 const PAYTO={bank:'Хаан банк',account:'5311778890',iban:'MN590005005311778890',holder:'Норпилмаа Мөнхзул'};
 let PAY=null;
 const addMonths=(d,m)=>{const x=new Date(d);x.setMonth(x.getMonth()+m);return x};
@@ -1197,7 +1196,7 @@ $('#joinForm').addEventListener('submit',e=>{
     Object.assign(rec,{capacity:isHall?+cp.value:null,photos:PHOTOS,promo:$('#jPromo').value.trim()});
     Object.assign(rec,{type:$('#jType').value,address:ad.value.trim(),map:mapUrl(mp.value),qr:QR,menuUrl:$('#jMenuUrl').value.trim()});
   }
-  if(WHO==='org'){m.innerHTML='';openPay(rec);return}
+  if(WHO==='org'&&FEE_ON){m.innerHTML='';openPay(rec);return}
   saveLead(rec);
   m.innerHTML=WHO==='org'
     ?`<div class="ok">Баярлалаа! <b>${esc(rec.name)}</b>-ийн хүсэлтийг хүлээн авлаа. Бид ${esc(rec.phone)} дугаар руу холбогдож, бүртгэлийг баталгаажуулна.</div>`
