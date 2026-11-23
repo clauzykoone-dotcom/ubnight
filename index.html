@@ -53,6 +53,12 @@ button{cursor:pointer}
 .top .wrap{display:flex;align-items:center;gap:16px;padding-block:12px;flex-wrap:wrap}
 .brand{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.03em;margin-right:auto;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg)}
 .brand .logo-ic{width:36px;height:36px;flex:0 0 auto;filter:drop-shadow(0 6px 14px rgba(219,39,119,.35))}
+.brand .neon{display:inline-block;animation:neon 4.5s infinite;filter:drop-shadow(0 0 2px rgba(255,92,147,.9)) drop-shadow(0 0 8px rgba(255,46,136,.7)) drop-shadow(0 0 18px rgba(251,146,60,.45))}
+@keyframes neon{
+  0%,18%,22%,25%,53%,57%,100%{opacity:1;filter:drop-shadow(0 0 2px rgba(255,92,147,.9)) drop-shadow(0 0 8px rgba(255,46,136,.7)) drop-shadow(0 0 18px rgba(251,146,60,.45))}
+  20%,24%,55%{opacity:.45;filter:none}
+}
+@media (prefers-reduced-motion:reduce){.brand .neon{animation:none}}
 .brand b{font-weight:800;background:linear-gradient(90deg,#FF5C93,#FB923C);-webkit-background-clip:text;background-clip:text;color:transparent}
 .nav{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px}
 .nav button{border:0;background:none;padding:7px 14px;border-radius:999px;font-weight:600;font-size:14px;color:var(--muted)}
@@ -412,7 +418,7 @@ button{cursor:pointer}
   <rect x="33" y="37" width="1.6" height="2" fill="#FDE047"/><rect x="33" y="42" width="1.6" height="2" fill="#FDE047"/>
   <rect x="44" y="48" width="1.6" height="2" fill="#FDE047"/><rect x="55" y="45" width="1.6" height="2" fill="#FDE047"/>
   </g>
-</svg><span>UB <b>Night</b></span></a>
+</svg><span><span class="neon">UB <b>Night</b></span></span></a>
     <nav class="nav" aria-label="Хэсгүүд">
       <button data-view="browse" aria-current="true">Газрууд</button>
       <button data-view="mine">Миний захиалга<span class="count" id="mineCount"></span></button>
