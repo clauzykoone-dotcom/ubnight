@@ -1451,7 +1451,8 @@ function resetJoin(){
 /* ---------- bank transfer, confirmed by the site owner ----------
    PAYTO: the site owner's receiving account (given by the user 2026-11-23). */
 const FEE=50000,FEE_ON=false; /* 2026-11-23: хураамжийг түр зогсоосон — FEE_ON=true болгоход дахин идэвхжинэ */
-const PAYTO={bank:'Хаан банк',account:'5311778890',iban:'MN590005005311778890',holder:'Норпилмаа Мөнхзул'};
+/* bank details removed from the public source while FEE_ON=false; fill in only when the fee is switched back on */
+const PAYTO={bank:'',account:'',iban:'',holder:''};
 let PAY=null;
 const addMonths=(d,m)=>{const x=new Date(d);x.setMonth(x.getMonth()+m);return x};
 const dot=d=>d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');
