@@ -187,9 +187,10 @@ button{cursor:pointer}
 .hero p b{color:#FDE047;font-weight:800}
 .hero p{margin:0;max-width:52ch;font-size:16px;font-weight:500;color:rgba(255,255,255,.95);text-shadow:0 1px 10px rgba(40,0,60,.35)}
 .hero .demo-note{color:#FEF08A}
-.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-.quick button{border:0;border-radius:999px;padding:9px 14px;font-weight:700;font-size:14px;background:rgba(255,255,255,.92);color:#3B0764;box-shadow:0 6px 18px rgba(40,0,60,.25);transition:transform .15s}
+.quick{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.quick button{border:0;border-radius:999px;padding:12px 20px;font-weight:800;font-size:16px;background:rgba(255,255,255,.92);color:#3B0764;box-shadow:0 6px 18px rgba(40,0,60,.25);transition:transform .15s}
 .quick button:hover{transform:translateY(-2px) rotate(-1deg)}
+@media (max-width:600px){.quick{gap:8px}.quick button{padding:10px 14px;font-size:15px}}
 .quick button[aria-pressed="true"]{background:#3B0764;color:#FDE047}
 .hvis{position:absolute;right:clamp(24px,4vw,56px);top:50%;width:360px;transform:translateY(-50%);display:grid;gap:12px}
 .hvis .shot{position:relative;height:270px;border-radius:24px;overflow:hidden;border:5px solid rgba(255,255,255,.95);box-shadow:0 30px 70px rgba(30,0,60,.55),0 0 0 1px rgba(255,255,255,.2);transform:rotate(2.5deg);transition:transform .35s}
@@ -614,18 +615,19 @@ button{cursor:pointer}
       <p class="only-night">Бар, клуб, караоке, лаунж, эвент заал — <b>сул ширээ, өрөөгөө шууд хараад үнэгүй захиал.</b> Залгаж асуух, дараалал хүлээх хэрэггүй. Бялуу, DJ, буцах жолоочоо хүртэл нэг дор.</p>
       <p class="only-day">Ланч сет, үдийн хямдрал, сул ширээ — <b>бүгд нэг дор.</b> Дараалалд зогсохгүй, ширээгээ урьдчилж аваад хамт олон, найзуудтайгаа үдийн цайгаа амар төлөвлө.</p>
       <div class="quick only-night" role="group" aria-label="Шууд сонгох">
-        <button data-type="karaoke" aria-pressed="false">🎤 Караоке</button>
-        <button data-type="fun" aria-pressed="false">🎳 Зугаа цэнгэл</button>
-        <button data-type="bar" aria-pressed="false">🍻 Бар</button>
-        <button data-type="cocktail" aria-pressed="false">🍹 Коктейль бар</button>
-        <button data-type="restaurant" aria-pressed="false">🍽️ Ресторан</button>
-        <button data-type="lounge" aria-pressed="false">🛋️ Лаунж</button>
-        <button data-type="strip" aria-pressed="false">💃 Стрип клаб</button>
-        <button data-type="hall" aria-pressed="false">🎉 Эвент заал</button>
-        <button type="button" data-godate>💕 Сохор болзоо</button>
+        <button data-type="club" aria-pressed="false">🪩 Night club</button>
+        <button data-type="bar" aria-pressed="false">🍻 Bar</button>
+        <button data-type="cocktail" aria-pressed="false">🍹 Cocktail bar</button>
+        <button data-type="restaurant" aria-pressed="false">🍽️ Restaurant</button>
+        <button data-type="lounge" aria-pressed="false">🛋️ Lounge</button>
+        <button data-type="fun" aria-pressed="false">🎳 Entertainment</button>
+        <button data-type="karaoke" aria-pressed="false">🎤 Karaoke</button>
+        <button data-type="strip" aria-pressed="false">💃 Strip club</button>
+        <button data-type="hall" aria-pressed="false">🎉 Event hall</button>
+        <button type="button" data-godate>💕 Blind date</button>
         <button type="button" data-gofriends>👋 New Friends</button>
       </div>
-      <div class="hstats only-night"><span><b id="hsVenues">—</b>газар</span><span><b>8</b>төрөл</span><span><b>0₮</b>захиалгын төлбөр</span></div>
+      <div class="hstats only-night"><span><b id="hsVenues">—</b>газар</span><span><b>9</b>төрөл</span><span><b>0₮</b>захиалгын төлбөр</span></div>
       <div class="quick only-day" role="group" aria-label="Өдрийн хоол сонгох">
         <button data-lq="ланч|сет" aria-pressed="false">🍱 Ланч сет</button>
         <button data-lq="монгол" aria-pressed="false">🥟 Монгол хоол</button>
@@ -668,6 +670,7 @@ button{cursor:pointer}
         <button data-type="all" aria-pressed="true">Бүгд</button>
         <button data-type="karaoke" aria-pressed="false">Караоке</button>
         <button data-type="fun" aria-pressed="false">Зугаа цэнгэл</button>
+        <button data-type="club" aria-pressed="false">Night club</button>
         <button data-type="bar" aria-pressed="false">Бар</button>
         <button data-type="cocktail" aria-pressed="false">Коктейль бар</button>
         <button data-type="restaurant" aria-pressed="false">Ресторан</button>
@@ -758,7 +761,7 @@ button{cursor:pointer}
         <p class="hint" style="margin:0">Хувь хүн бүртгүүлэхэд үнэгүй. Захиалгаа нэг дор хадгалж, хадгалсан газруудаа хаанаас ч харна.</p>
       </div>
       <label><span data-for="org">Газрын нэр</span><span data-for="person" hidden>Таны нэр</span><input id="jName" required placeholder="Жишээ: Микрофон Караоке"></label>
-      <label data-for="org">Төрөл<select id="jType"><option>Бар</option><option>Коктейль бар</option><option>Ресторан</option><option>Караоке</option><option>Зугаа цэнгэл</option><option>Лаунж</option><option>Стрип клаб</option><option>Эвент заал</option></select></label>
+      <label data-for="org">Төрөл<select id="jType"><option>Night club</option><option>Бар</option><option>Коктейль бар</option><option>Ресторан</option><option>Караоке</option><option>Зугаа цэнгэл</option><option>Лаунж</option><option>Стрип клаб</option><option>Эвент заал</option></select></label>
       <label>Холбогдох утас<input id="jPhone" type="tel" inputmode="numeric" autocomplete="tel" required placeholder="99112233"><small class="hint">Сайтад харагдахгүй, бид баталгаажуулахад залгана.</small></label>
       <div data-for="org" class="vsec">
         <div class="vsec-h">📍 Байршил ба цаг <small>(заавал биш)</small></div>
@@ -834,6 +837,14 @@ const MENU={
     {id:'snack',n:'Хачир сет',d:'Хуушуур, шарсан төмс',p:38000},
     {id:'fruit',n:'Жимсний таваг',d:'4–6 хүнд',p:35000}
   ],
+  club:[
+    {id:'champ',n:'Шампан',d:'Ширээнд',p:150000},
+    {id:'vodka',n:'Архи 0.5л',d:'Премиум, ундаа + мөс',p:95000},
+    {id:'cocktail',n:'Коктейль',d:'Барменийн сонголт',p:26000},
+    {id:'shots',n:'Шот сет ×6',d:'Текила / Егерь',p:48000},
+    {id:'beer',n:'Пиво 0.5л',d:'Шилтэй',p:12000},
+    {id:'fruit',n:'Жимсний таваг',d:'4–6 хүнд',p:35000}
+  ],
   fun:[
     {id:'soda',n:'Ундаа',d:'Кола, спрайт, жүүс',p:5000},
     {id:'coffee',n:'Кофе',d:'Американо / латте',p:8000},
@@ -884,9 +895,9 @@ const MENU={
   ]
 };
 const HOURLY=t=>t==='karaoke'||t==='fun';
-const ALL=['karaoke','fun','bar','cocktail','restaurant','lounge','strip','hall'];
-const UW={karaoke:'өрөө',fun:'талбай',bar:'ширээ',cocktail:'ширээ',restaurant:'ширээ',lounge:'ширээ',strip:'ширээ',hall:'танхим'};
-const TN={karaoke:'Караоке',fun:'Зугаа цэнгэл',bar:'Бар',cocktail:'Коктейль бар',restaurant:'Ресторан',lounge:'Лаунж',strip:'Стрип клаб',hall:'Эвент заал'};
+const ALL=['club','karaoke','fun','bar','cocktail','restaurant','lounge','strip','hall'];
+const UW={club:'ширээ',karaoke:'өрөө',fun:'талбай',bar:'ширээ',cocktail:'ширээ',restaurant:'ширээ',lounge:'ширээ',strip:'ширээ',hall:'танхим'};
+const TN={club:'Night club',karaoke:'Караоке',fun:'Зугаа цэнгэл',bar:'Бар',cocktail:'Коктейль бар',restaurant:'Ресторан',lounge:'Лаунж',strip:'Стрип клаб',hall:'Эвент заал'};
 const cap1=s=>s[0].toUpperCase()+s.slice(1);
 const EVENTS=['Шинэ жилийн үдэшлэг','Төрсөн өдөр','Байгууллагын үдэшлэг','Хурим','Төгсөлт','Ойн баяр','Бусад'];
 const PKG=[
@@ -900,13 +911,13 @@ const SERVICES=[
   {id:'flowers',n:'Цэцгийн баглаа',d:'Ирэхэд бэлэн байна',p:80000,t:ALL},
   {id:'dj',n:'DJ',d:'3 цаг, өөрийн тоног төхөөрөмжтэй',p:400000,t:['hall']},
   {id:'mc',n:'Хөтлөгч (MC)',d:'Арга хэмжээг эхнээс нь дуустал хөтөлнө',p:500000,t:['hall']},
-  {id:'photo',n:'Гэрэл зурагчин',d:'3 цаг, 100+ засвартай зураг',p:300000,t:['hall','bar','cocktail','restaurant','lounge']},
+  {id:'photo',n:'Гэрэл зурагчин',d:'3 цаг, 100+ засвартай зураг',p:300000,t:['hall','club','bar','cocktail','restaurant','lounge']},
   {id:'singer',n:'Дуучин урих',d:'30 минутын тоглолт',p:900000,t:['hall']},
   {id:'driver',n:'Жолооч дуудах',d:'Буцахдаа таныг машинтай тань хамт гэрт хүргэнэ · УБ дотор',p:30000,t:ALL}
 ];
 const svcFor=v=>SERVICES.filter(s=>s.t.includes(v.type));
 const V=[
-  {id:'dorgio',name:'Доргио 88',type:'bar',district:'—',own:true,hue:330,rating:4.7,reviews:212,open:20,close:27,tagline:'Night club · DJ · VIP lounge',
+  {id:'dorgio',name:'Доргио 88',type:'club',district:'—',own:true,hue:330,rating:4.7,reviews:212,open:20,close:27,tagline:'Night club · DJ · VIP lounge',
    units:[{id:'t4',n:'Ширээ · 2–4 хүн',cap:4,count:10,price:20000},{id:'t8',n:'Ширээ · 6–8 хүн',cap:8,count:4,price:50000},{id:'vip',n:'VIP lounge',cap:14,count:2,price:200000}]},
   {id:'mic',name:'Микрофон Караоке',type:'karaoke',district:'Сүхбаатар',hue:265,rating:4.6,reviews:388,open:18,close:27,tagline:'Шинэ дуун сан · 14 өрөө',
    units:[{id:'s',n:'Жижиг өрөө',cap:6,count:6,price:30000},{id:'m',n:'Дунд өрөө',cap:10,count:5,price:50000},{id:'v',n:'VIP өрөө',cap:20,count:3,price:90000}]},
@@ -1522,8 +1533,8 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{if(PAY&&e.key==='Escape'){if(PAY.st==='sent'){$('#jMsg').innerHTML=`<div class="ok">✓ <b>${esc(PAY.rec.name)}</b>-ийн хүсэлт хүлээн авлаа. Код <span class="mono">${PAY.rec.code}</span>.</div>`;resetJoin()}closePay()}});
 
 /* venue registration: unit rows editor */
-const TYPE_CODE={'Бар':'bar','Коктейль бар':'cocktail','Ресторан':'restaurant','Караоке':'karaoke','Зугаа цэнгэл':'fun','Лаунж':'lounge','Стрип клаб':'strip','Эвент заал':'hall'};
-const UNIT_DEF={fun:['Боулингийн зам / биллиард ширээ',4],bar:['Ширээ · 2–4 хүн',4],cocktail:['Ширээ · 2–4 хүн',4],restaurant:['Ширээ · 2–4 хүн',4],karaoke:['Жижиг өрөө',6],lounge:['Буйдан · 2–4 хүн',4],strip:['Ширээ · 2–4 хүн',4],hall:['Үндсэн танхим',100]};
+const TYPE_CODE={'Night club':'club','Бар':'bar','Коктейль бар':'cocktail','Ресторан':'restaurant','Караоке':'karaoke','Зугаа цэнгэл':'fun','Лаунж':'lounge','Стрип клаб':'strip','Эвент заал':'hall'};
+const UNIT_DEF={club:['Ширээ · 2–4 хүн',4],fun:['Боулингийн зам / биллиард ширээ',4],bar:['Ширээ · 2–4 хүн',4],cocktail:['Ширээ · 2–4 хүн',4],restaurant:['Ширээ · 2–4 хүн',4],karaoke:['Жижиг өрөө',6],lounge:['Буйдан · 2–4 хүн',4],strip:['Ширээ · 2–4 хүн',4],hall:['Үндсэн танхим',100]};
 function unitRow(u){const d=document.createElement('div');d.className='urow';
   d.innerHTML=`<label>Нэр<input class="un" maxlength="40" value="${esc(u.n||'')}" placeholder="VIP өрөө"></label><label>Хүн<input class="uc" type="number" min="1" inputmode="numeric" value="${u.cap||''}"></label><label>Тоо<input class="uq" type="number" min="1" inputmode="numeric" value="${u.count||''}"></label><label>Үнэ ₮<input class="up" type="number" min="0" step="1000" inputmode="numeric" value="${u.price??''}" placeholder="0"></label><button type="button" class="x" aria-label="Мөр хасах">×</button>`;
   d.querySelector('.x').addEventListener('click',()=>d.remove());return d}
@@ -1615,7 +1626,7 @@ Object.assign(DISTC,{'Архангай аймаг':[47.4769,101.4542],'Баян-
 function isAimag(d){return / аймаг$/.test(d||'')}
 /* where a venue is, for text and map search: «Сүхбаатар дүүрэг, Улаанбаатар» or «Дархан-Уул аймаг, Монгол» */
 const cityOf=v=>isAimag(v.district)?v.district+', Монгол':(v.district&&v.district!=='—'?v.district+' дүүрэг, ':'')+'Улаанбаатар';
-const UBC=[47.9185,106.9170],PINIC={fun:'🎳',bar:'🍻',cocktail:'🍹',restaurant:'🍽️',karaoke:'🎤',lounge:'🛋️',strip:'💃',hall:'🎉'};
+const UBC=[47.9185,106.9170],PINIC={club:'🪩',fun:'🎳',bar:'🍻',cocktail:'🍹',restaurant:'🍽️',karaoke:'🎤',lounge:'🛋️',strip:'💃',hall:'🎉'};
 var GEO={};try{GEO=JSON.parse(localStorage.getItem('ubn.geo')||'{}')}catch(_){}
 function coordsFromLink(u){u=String(u||'');const m=u.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)||u.match(/[?&](?:q|query|ll|destination)=(-?\d+\.\d+),\s*(-?\d+\.\d+)/)||u.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);return m?[+m[1],+m[2]]:null}
 function coordsOf(v){if(v.lat&&v.lng)return [v.lat,v.lng];const l=coordsFromLink(v.map);if(l)return l;
