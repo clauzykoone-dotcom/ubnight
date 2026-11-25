@@ -591,8 +591,8 @@ button{cursor:pointer}
         </div>
         <div class="tabs" role="group" aria-label="Зураг сонгох">
           <button type="button" data-hv="club" aria-pressed="true">🪩 Night club</button>
-          <button type="button" data-hv="karaoke" aria-pressed="false">🎤 Караоке</button>
-          <button type="button" data-hv="bar" aria-pressed="false">🍸 Бар</button>
+          <button type="button" data-hv="karaoke" aria-pressed="false">🎤 Karaoke</button>
+          <button type="button" data-hv="bar" aria-pressed="false">🍸 Bar</button>
         </div>
       </div>
       <div class="hvis only-day" id="hvisDay">
@@ -605,9 +605,9 @@ button{cursor:pointer}
           <span class="cap" id="hdCap">Кафе · өдрийн сет</span>
         </div>
         <div class="tabs" role="group" aria-label="Өдрийн хоол сонгох">
-          <button type="button" data-hd="cafe" aria-pressed="true">☕ Кафе</button>
-          <button type="button" data-hd="korean" aria-pressed="false">🥩 Солонгос</button>
-          <button type="button" data-hd="mongol" aria-pressed="false">🥟 Монгол хоол</button>
+          <button type="button" data-hd="cafe" aria-pressed="true">☕ Café</button>
+          <button type="button" data-hd="korean" aria-pressed="false">🥩 Korean</button>
+          <button type="button" data-hd="mongol" aria-pressed="false">🥟 Mongolian food</button>
         </div>
       </div>
       <span class="tag only-night"><i></i>🔥 Өнөө орой сул байгаа газрууд</span><span class="tag only-day"><i></i>🍱 Өнөөдрийн үдийн цай</span>
@@ -616,7 +616,8 @@ button{cursor:pointer}
       <p class="only-day">Ланч сет, үдийн хямдрал, сул ширээ — <b>бүгд нэг дор.</b> Дараалалд зогсохгүй, ширээгээ урьдчилж аваад хамт олон, найзуудтайгаа үдийн цайгаа амар төлөвлө.</p>
       <div class="quick only-night" role="group" aria-label="Шууд сонгох">
         <button data-type="club" aria-pressed="false">🪩 Night club</button>
-        <button data-type="bar" aria-pressed="false">🍻 Bar</button>
+        <button data-type="bar" aria-pressed="false">🍸 Bar</button>
+        <button data-type="beer" aria-pressed="false">🍺 Beer house</button>
         <button data-type="cocktail" aria-pressed="false">🍹 Cocktail bar</button>
         <button data-type="restaurant" aria-pressed="false">🍽️ Restaurant</button>
         <button data-type="lounge" aria-pressed="false">🛋️ Lounge</button>
@@ -624,10 +625,8 @@ button{cursor:pointer}
         <button data-type="karaoke" aria-pressed="false">🎤 Karaoke</button>
         <button data-type="strip" aria-pressed="false">💃 Strip club</button>
         <button data-type="hall" aria-pressed="false">🎉 Event hall</button>
-        <button type="button" data-godate>💕 Blind date</button>
-        <button type="button" data-gofriends>👋 New Friends</button>
       </div>
-      <div class="hstats only-night"><span><b id="hsVenues">—</b>газар</span><span><b>9</b>төрөл</span><span><b>0₮</b>захиалгын төлбөр</span></div>
+      <div class="hstats only-night"><span><b id="hsVenues">—</b>газар</span><span><b>10</b>төрөл</span><span><b>0₮</b>захиалгын төлбөр</span></div>
       <div class="quick only-day" role="group" aria-label="Өдрийн хоол сонгох">
         <button data-lq="ланч|сет" aria-pressed="false">🍱 Lunch set</button>
         <button data-lq="монгол" aria-pressed="false">🥟 Mongolian food</button>
@@ -672,6 +671,7 @@ button{cursor:pointer}
         <button data-type="fun" aria-pressed="false">Sport Lounge bar</button>
         <button data-type="club" aria-pressed="false">Night club</button>
         <button data-type="bar" aria-pressed="false">Бар</button>
+        <button data-type="beer" aria-pressed="false">Beer house</button>
         <button data-type="cocktail" aria-pressed="false">Коктейль бар</button>
         <button data-type="restaurant" aria-pressed="false">Ресторан</button>
         <button data-type="lounge" aria-pressed="false">Лаунж</button>
@@ -761,7 +761,7 @@ button{cursor:pointer}
         <p class="hint" style="margin:0">Хувь хүн бүртгүүлэхэд үнэгүй. Захиалгаа нэг дор хадгалж, хадгалсан газруудаа хаанаас ч харна.</p>
       </div>
       <label><span data-for="org">Газрын нэр</span><span data-for="person" hidden>Таны нэр</span><input id="jName" required placeholder="Жишээ: Микрофон Караоке"></label>
-      <label data-for="org">Төрөл<select id="jType"><option>Night club</option><option>Бар</option><option>Коктейль бар</option><option>Ресторан</option><option>Караоке</option><option>Sport Lounge bar</option><option>Лаунж</option><option>Стрип клаб</option><option>Эвент заал</option></select></label>
+      <label data-for="org">Төрөл<select id="jType"><option>Night club</option><option>Бар</option><option>Beer house</option><option>Коктейль бар</option><option>Ресторан</option><option>Караоке</option><option>Sport Lounge bar</option><option>Лаунж</option><option>Стрип клаб</option><option>Эвент заал</option></select></label>
       <label>Холбогдох утас<input id="jPhone" type="tel" inputmode="numeric" autocomplete="tel" required placeholder="99112233"><small class="hint">Сайтад харагдахгүй, бид баталгаажуулахад залгана.</small></label>
       <div data-for="org" class="vsec">
         <div class="vsec-h">📍 Байршил ба цаг <small>(заавал биш)</small></div>
@@ -837,6 +837,14 @@ const MENU={
     {id:'snack',n:'Хачир сет',d:'Хуушуур, шарсан төмс',p:38000},
     {id:'fruit',n:'Жимсний таваг',d:'4–6 хүнд',p:35000}
   ],
+  beer:[
+    {id:'draft',n:'Draft пиво 0.5л',d:'Цайвар / бараан',p:10000},
+    {id:'tower',n:'Пивоны цамхаг 3л',d:'4–6 хүнд',p:55000},
+    {id:'craft',n:'Гар урлалын пиво',d:'Улирлын сонголт',p:14000},
+    {id:'wings',n:'Тахианы далавч',d:'Халуун ногоотой',p:28000},
+    {id:'snack',n:'Хачир сет',d:'Хуушуур, шарсан төмс',p:38000},
+    {id:'soda',n:'Ундаа 1.5л',d:'Кола, спрайт',p:8000}
+  ],
   club:[
     {id:'champ',n:'Шампан',d:'Ширээнд',p:150000},
     {id:'vodka',n:'Архи 0.5л',d:'Премиум, ундаа + мөс',p:95000},
@@ -895,9 +903,9 @@ const MENU={
   ]
 };
 const HOURLY=t=>t==='karaoke'||t==='fun';
-const ALL=['club','karaoke','fun','bar','cocktail','restaurant','lounge','strip','hall'];
-const UW={club:'ширээ',karaoke:'өрөө',fun:'талбай',bar:'ширээ',cocktail:'ширээ',restaurant:'ширээ',lounge:'ширээ',strip:'ширээ',hall:'танхим'};
-const TN={club:'Night club',karaoke:'Караоке',fun:'Sport Lounge bar',bar:'Бар',cocktail:'Коктейль бар',restaurant:'Ресторан',lounge:'Лаунж',strip:'Стрип клаб',hall:'Эвент заал'};
+const ALL=['club','beer','karaoke','fun','bar','cocktail','restaurant','lounge','strip','hall'];
+const UW={club:'ширээ',beer:'ширээ',karaoke:'өрөө',fun:'талбай',bar:'ширээ',cocktail:'ширээ',restaurant:'ширээ',lounge:'ширээ',strip:'ширээ',hall:'танхим'};
+const TN={club:'Night club',beer:'Beer house',karaoke:'Караоке',fun:'Sport Lounge bar',bar:'Бар',cocktail:'Коктейль бар',restaurant:'Ресторан',lounge:'Лаунж',strip:'Стрип клаб',hall:'Эвент заал'};
 const cap1=s=>s[0].toUpperCase()+s.slice(1);
 const EVENTS=['Шинэ жилийн үдэшлэг','Төрсөн өдөр','Байгууллагын үдэшлэг','Хурим','Төгсөлт','Ойн баяр','Бусад'];
 const PKG=[
@@ -911,7 +919,7 @@ const SERVICES=[
   {id:'flowers',n:'Цэцгийн баглаа',d:'Ирэхэд бэлэн байна',p:80000,t:ALL},
   {id:'dj',n:'DJ',d:'3 цаг, өөрийн тоног төхөөрөмжтэй',p:400000,t:['hall']},
   {id:'mc',n:'Хөтлөгч (MC)',d:'Арга хэмжээг эхнээс нь дуустал хөтөлнө',p:500000,t:['hall']},
-  {id:'photo',n:'Гэрэл зурагчин',d:'3 цаг, 100+ засвартай зураг',p:300000,t:['hall','club','bar','cocktail','restaurant','lounge']},
+  {id:'photo',n:'Гэрэл зурагчин',d:'3 цаг, 100+ засвартай зураг',p:300000,t:['hall','club','beer','bar','cocktail','restaurant','lounge']},
   {id:'singer',n:'Дуучин урих',d:'30 минутын тоглолт',p:900000,t:['hall']},
   {id:'driver',n:'Жолооч дуудах',d:'Буцахдаа таныг машинтай тань хамт гэрт хүргэнэ · УБ дотор',p:30000,t:ALL}
 ];
@@ -945,11 +953,11 @@ const V=[
    units:[{id:'lane',n:'Боулингийн зам',cap:6,count:8,price:45000},{id:'pool',n:'Биллиард ширээ',cap:4,count:6,price:25000},{id:'ps',n:'PS5 өрөө',cap:6,count:4,price:30000},{id:'quest',n:'Квест өрөө',cap:6,count:2,price:80000}]},
   {id:'alchemy',date:'Бар стойк дээр барменийн шоу үзэнгээ ярилцана',name:'Алхимист коктейль бар',type:'cocktail',district:'Сүхбаатар',hue:175,open:18,close:27,tagline:'Signature коктейль · барменийн шоу',
    units:[{id:'bar',n:'Бар стойк · 1–2 хүн',cap:2,count:10,price:0},{id:'t4',n:'Ширээ · 2–4 хүн',cap:4,count:8,price:15000},{id:'booth',n:'Буйдан · 6 хүн',cap:6,count:3,price:40000}]},
-  {id:'pub21',name:'Паб 21',type:'bar',district:'Сүхбаатар',hue:15,rating:4.3,reviews:254,open:18,close:26,tagline:'Амьд хөгжим · Баасан, Бямба',
+  {id:'pub21',name:'Паб 21',type:'beer',district:'Сүхбаатар',hue:15,rating:4.3,reviews:254,open:18,close:26,tagline:'Амьд хөгжим · Баасан, Бямба',
    units:[{id:'t4',n:'Ширээ · 2–4 хүн',cap:4,count:12,price:10000},{id:'t8',n:'Урт ширээ · 8–10 хүн',cap:10,count:3,price:40000}]},
   {id:'tsenkher',name:'Цэнхэр микрофон',type:'karaoke',district:'Сонгинохайрхан',hue:180,rating:4.1,reviews:64,open:18,close:26,tagline:'Гэр бүлийн өрөөтэй',
    units:[{id:'s',n:'Жижиг өрөө',cap:6,count:5,price:22000},{id:'m',n:'Дунд өрөө',cap:10,count:3,price:38000}]},
-  {id:'khuurug',name:'Хөөрөг паб',type:'bar',district:'Хан-Уул',hue:95,rating:4.4,reviews:120,open:18,close:26,tagline:'Гар урлалын пиво · дартс',
+  {id:'khuurug',name:'Хөөрөг паб',type:'beer',district:'Хан-Уул',hue:95,rating:4.4,reviews:120,open:18,close:26,tagline:'Гар урлалын пиво · дартс',
    units:[{id:'t4',n:'Ширээ · 2–4 хүн',cap:4,count:9,price:10000},{id:'t8',n:'Ширээ · 6–8 хүн',cap:8,count:4,price:30000}]},
   {id:'munkh',name:'Мөнх тэнгэр ордон',type:'hall',district:'Хан-Уул',hue:45,rating:4.6,reviews:158,open:11,close:24,tagline:'Хурим, ойн баяр · 2 танхим',
    units:[{id:'big',n:'Их танхим',cap:200,count:1,price:1500000},{id:'small',n:'Жижиг танхим',cap:60,count:1,price:500000}]},
@@ -1533,8 +1541,8 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{if(PAY&&e.key==='Escape'){if(PAY.st==='sent'){$('#jMsg').innerHTML=`<div class="ok">✓ <b>${esc(PAY.rec.name)}</b>-ийн хүсэлт хүлээн авлаа. Код <span class="mono">${PAY.rec.code}</span>.</div>`;resetJoin()}closePay()}});
 
 /* venue registration: unit rows editor */
-const TYPE_CODE={'Night club':'club','Бар':'bar','Коктейль бар':'cocktail','Ресторан':'restaurant','Караоке':'karaoke','Sport Lounge bar':'fun','Лаунж':'lounge','Стрип клаб':'strip','Эвент заал':'hall'};
-const UNIT_DEF={club:['Ширээ · 2–4 хүн',4],fun:['Боулингийн зам / биллиард ширээ',4],bar:['Ширээ · 2–4 хүн',4],cocktail:['Ширээ · 2–4 хүн',4],restaurant:['Ширээ · 2–4 хүн',4],karaoke:['Жижиг өрөө',6],lounge:['Буйдан · 2–4 хүн',4],strip:['Ширээ · 2–4 хүн',4],hall:['Үндсэн танхим',100]};
+const TYPE_CODE={'Night club':'club','Beer house':'beer','Бар':'bar','Коктейль бар':'cocktail','Ресторан':'restaurant','Караоке':'karaoke','Sport Lounge bar':'fun','Лаунж':'lounge','Стрип клаб':'strip','Эвент заал':'hall'};
+const UNIT_DEF={club:['Ширээ · 2–4 хүн',4],beer:['Ширээ · 4–6 хүн',6],fun:['Боулингийн зам / биллиард ширээ',4],bar:['Ширээ · 2–4 хүн',4],cocktail:['Ширээ · 2–4 хүн',4],restaurant:['Ширээ · 2–4 хүн',4],karaoke:['Жижиг өрөө',6],lounge:['Буйдан · 2–4 хүн',4],strip:['Ширээ · 2–4 хүн',4],hall:['Үндсэн танхим',100]};
 function unitRow(u){const d=document.createElement('div');d.className='urow';
   d.innerHTML=`<label>Нэр<input class="un" maxlength="40" value="${esc(u.n||'')}" placeholder="VIP өрөө"></label><label>Хүн<input class="uc" type="number" min="1" inputmode="numeric" value="${u.cap||''}"></label><label>Тоо<input class="uq" type="number" min="1" inputmode="numeric" value="${u.count||''}"></label><label>Үнэ ₮<input class="up" type="number" min="0" step="1000" inputmode="numeric" value="${u.price??''}" placeholder="0"></label><button type="button" class="x" aria-label="Мөр хасах">×</button>`;
   d.querySelector('.x').addEventListener('click',()=>d.remove());return d}
@@ -1626,7 +1634,7 @@ Object.assign(DISTC,{'Архангай аймаг':[47.4769,101.4542],'Баян-
 function isAimag(d){return / аймаг$/.test(d||'')}
 /* where a venue is, for text and map search: «Сүхбаатар дүүрэг, Улаанбаатар» or «Дархан-Уул аймаг, Монгол» */
 const cityOf=v=>isAimag(v.district)?v.district+', Монгол':(v.district&&v.district!=='—'?v.district+' дүүрэг, ':'')+'Улаанбаатар';
-const UBC=[47.9185,106.9170],PINIC={club:'🪩',fun:'🎳',bar:'🍻',cocktail:'🍹',restaurant:'🍽️',karaoke:'🎤',lounge:'🛋️',strip:'💃',hall:'🎉'};
+const UBC=[47.9185,106.9170],PINIC={club:'🪩',beer:'🍺',fun:'🎳',bar:'🍻',cocktail:'🍹',restaurant:'🍽️',karaoke:'🎤',lounge:'🛋️',strip:'💃',hall:'🎉'};
 var GEO={};try{GEO=JSON.parse(localStorage.getItem('ubn.geo')||'{}')}catch(_){}
 function coordsFromLink(u){u=String(u||'');const m=u.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)||u.match(/[?&](?:q|query|ll|destination)=(-?\d+\.\d+),\s*(-?\d+\.\d+)/)||u.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);return m?[+m[1],+m[2]]:null}
 function coordsOf(v){if(v.lat&&v.lng)return [v.lat,v.lng];const l=coordsFromLink(v.map);if(l)return l;
