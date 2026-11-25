@@ -231,6 +231,10 @@ button{cursor:pointer}
 .card{border:1px solid var(--line);background:var(--surface);border-radius:20px;overflow:hidden;text-align:left;padding:0;display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
 .card:hover{transform:translateY(-3px);border-color:var(--accent)}
 .band{height:118px;position:relative;background:linear-gradient(135deg,hsl(var(--h) 70% var(--card-l1)),hsl(calc(var(--h) + 50) 65% var(--card-l2)));display:flex;align-items:flex-end;padding:12px 14px;overflow:hidden}
+.band .bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.band.hasimg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.55))}
+.band.hasimg>span:not(.glyph){position:relative;z-index:1}
+.band.hasimg .glyph{display:none}
 .band .glyph{position:absolute;right:-6px;top:-20px;font-family:var(--display);font-weight:800;font-size:120px;line-height:1;color:rgba(255,255,255,.16);pointer-events:none}
 .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--pill-bg);color:#fff}
 .pill.own{background:#fff;color:#22070F;margin-left:6px}
@@ -1097,7 +1101,7 @@ function renderGrid(){
     const ftxt=pk===null?(lateNight?'Өнөө шөнийн цаг дууссан':'Өнөөдрийн цаг дууссан'):f===0?`${hl(pk)}-д дүүрсэн`:`${hl(pk)}-д ${f} ${unit} сул`;
     const fv=S.favs.includes(v.id);
     return `<div class="cw"><button class="fav" data-fav="${v.id}" aria-pressed="${fv}" aria-label="${esc(v.name)} — ${fv?'хадгалснаас хасах':'хадгалах'}">${fv?'♥':'♡'}</button><button class="card" data-open="${v.id}" style="--h:${v.hue}">
-      <div class="band"><span class="glyph">${esc(v.name[0])}</span><span><span class="pill">${TN[v.type]}</span>${v.adult?'<span class="pill adult">18+</span>':''}${v.own?'<span class="pill own">Таны бар</span>':''}${v.real?'<span class="pill realpill">✓ Бүртгэлтэй</span>':''}</span></div>
+      <div class="band${v.photos&&v.photos.length?' hasimg':''}">${v.photos&&v.photos.length?`<img class="bimg" src="${esc(v.photos[0])}" alt="" loading="lazy">`:''}<span class="glyph">${esc(v.name[0])}</span><span><span class="pill">${TN[v.type]}</span>${v.adult?'<span class="pill adult">18+</span>':''}${v.own?'<span class="pill own">Таны бар</span>':''}${v.real?'<span class="pill realpill">✓ Бүртгэлтэй</span>':''}</span></div>
       <div class="body">
         <h3>${esc(v.name)}</h3>
         <div class="meta">${esc(v.tagline)}</div>
@@ -1180,7 +1184,8 @@ function renderSheet(){
       <span style="display:flex;gap:8px"><a class="x" href="${dirUrl(v)}" target="_blank" rel="noopener" aria-label="Google Maps-ээр чиглэл авах" title="Чиглэл" style="display:grid;place-items:center;text-decoration:none">🧭</a><button class="x" data-menu="${v.id}" aria-label="Цэс харах" title="Цэс">📋</button><button class="x" data-qr="${v.id}" aria-label="QR код" title="QR код">▦</button><button class="x" data-share="${v.id}" aria-label="Энэ газрыг хуваалцах" title="Хуваалцах">🔗</button><button class="x" data-close aria-label="Хаах">×</button></span></div>
     <div class="sheet-body">
       ${(pr0(v).bday||pr0(v).deal)?`<div class="step"><div class="promo-box"><b>🎁 Урамшуулал</b>${pr0(v).deal?`<span>🏷️ ${esc(pr0(v).deal)}</span>`:''}${pr0(v).bday?`<span>🎂 ${esc(pr0(v).bday)}${d.ev==='Төрсөн өдөр'?' <span class="hit">· таны захиалгад хамаарна ✓</span>':''}</span>`:''}</div></div>`:''}
-      ${hall?`<div class="step"><h4>Зураг</h4><div class="gal">${(v.photos||[]).map((src,i)=>`<figure><img src="${src}" alt="${esc(v.name)} зураг ${i+1}"></figure>`).join('')||v.units.flatMap((x,i)=>[0,1].map(k=>`<figure>${hallSvg(v,x,(i*2+k)%3)}<figcaption>${esc(x.n)} · ${x.cap} хүн</figcaption></figure>`)).join('')}</div>${(v.photos||[]).length?'':'<div class="hint">Жишээ зураг. Газрын эзэн бүртгүүлэхдээ жинхэнэ зургаа оруулна.</div>'}</div>
+      ${!hall&&(v.photos||[]).length?`<div class="step"><h4>Зураг</h4><div class="gal">${v.photos.map((src,i)=>`<figure><img src="${esc(src)}" alt="${esc(v.name)} зураг ${i+1}" loading="lazy"></figure>`).join('')}</div></div>`:''}
+      ${hall?`<div class="step"><h4>Зураг</h4><div class="gal">${(v.photos||[]).map((src,i)=>`<figure><img src="${esc(src)}" alt="${esc(v.name)} зураг ${i+1}" loading="lazy"></figure>`).join('')||v.units.flatMap((x,i)=>[0,1].map(k=>`<figure>${hallSvg(v,x,(i*2+k)%3)}<figcaption>${esc(x.n)} · ${x.cap} хүн</figcaption></figure>`)).join('')}</div>${(v.photos||[]).length?'':'<div class="hint">Жишээ зураг. Газрын эзэн бүртгүүлэхдээ жинхэнэ зургаа оруулна.</div>'}</div>
       <div class="step"><h4>Хүлээн авах хүний тоо</h4><div class="caps">${v.units.map(x=>`<div><b>${x.cap}</b>${esc(x.n)}</div>`).join('')}</div></div>`:''}
       <div class="step"><h4>Өдөр</h4><div class="days" style="padding:0">${dayChips(di,'data-sday')}</div></div>
       ${hall?`<div class="step"><h4>Арга хэмжээ</h4><div class="inline">${EVENTS.map(e=>`<button class="chip" data-ev="${e}" aria-pressed="${d.ev===e}">${e}</button>`).join('')}</div></div>`:''}
@@ -1423,7 +1428,14 @@ function syncHall(){
   document.querySelectorAll('[data-hall]').forEach(el=>el.hidden=!isHall);
   $('#jPhLbl').textContent=isHall?'Заалын зураг':'Газрын зураг (заавал биш)';
 }
-let PHOTOS=[];
+let PHOTOS=[],PHOTO_FILES=[];
+const MAXPH=6;
+/* shrink a photo to ≤1280px JPEG before upload so it travels fast on mobile data */
+function shrinkImg(f,max=1280,q=.8){return new Promise((ok,no)=>{const u=URL.createObjectURL(f),im=new Image();
+  im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
+    c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',q))};
+  im.onerror=()=>{URL.revokeObjectURL(u);no(new Error('img'))};im.src=u})}
+const shrinkAll=fs=>Promise.all(fs.slice(0,MAXPH).map(f=>shrinkImg(f).catch(()=>null))).then(a=>a.filter(Boolean));
 document.addEventListener('click',e=>{const b=e.target.closest('[data-who]');if(b)setWho(b.dataset.who)});
 document.addEventListener('input',e=>{
   if(e.target.id==='jMap'){const ok=MAPRE.test(e.target.value.trim()),a=$('#jMapOpen');a.hidden=!ok;if(ok)a.href=mapUrl(e.target.value);e.target.removeAttribute('aria-invalid')}
@@ -1431,8 +1443,8 @@ document.addEventListener('input',e=>{
 document.addEventListener('change',e=>{
   if(e.target.id==='jType'){syncHall();return}
   if(e.target.id==='jPhotos'){
-    const fs=[...(e.target.files||[])].filter(f=>f.type.startsWith('image/'));PHOTOS=fs.map(f=>f.name);
-    $('#jPhTxt').textContent=fs.length?`✓ ${fs.length} зураг сонгосон · солих`:'Заал, ширээ, тайзны зургуудаа сонгох (хэдийг ч)';
+    const fs=[...(e.target.files||[])].filter(f=>f.type.startsWith('image/')).slice(0,MAXPH);PHOTOS=fs.map(f=>f.name);PHOTO_FILES=fs;
+    $('#jPhTxt').textContent=fs.length?`✓ ${fs.length} зураг сонгосон${e.target.files.length>MAXPH?` (эхний ${MAXPH})`:''} · солих`:'Заал, ширээ, тайзны зургуудаа сонгох (хэдийг ч)';
     const th=$('#jThumbs');th.innerHTML='';
     fs.slice(0,12).forEach((f,i)=>{const img=document.createElement('img');img.alt=`Сонгосон зураг ${i+1}`;th.appendChild(img);const r=new FileReader();r.onload=()=>img.src=r.result;r.readAsDataURL(f)});
     return}
@@ -1446,7 +1458,7 @@ document.addEventListener('change',e=>{
 function saveLead(rec){leads().push(rec);saveLeads(leads())}
 function resetJoin(){
   $('#joinForm').reset();QR=null;$('#jQrImg').hidden=true;$('#jMapOpen').hidden=true;$('#jQrTxt').textContent='QR цэс эсвэл цэсний зургаа сонгох';
-  PHOTOS=[];$('#jThumbs').innerHTML='';$('#jPhTxt').textContent='Заал, ширээ, тайзны зургуудаа сонгох (хэдийг ч)';syncHall();
+  PHOTOS=[];PHOTO_FILES=[];$('#jThumbs').innerHTML='';$('#jPhTxt').textContent='Заал, ширээ, тайзны зургуудаа сонгох (хэдийг ч)';syncHall();
 }
 /* ---------- bank transfer, confirmed by the site owner ----------
    PAYTO: the site owner's receiving account (given by the user 2026-11-23). */
@@ -1539,13 +1551,16 @@ $('#joinForm').addEventListener('submit',e=>{
     const units=[...document.querySelectorAll('#jUnits .urow')].map(r=>({n:r.querySelector('.un').value.trim(),cap:+r.querySelector('.uc').value||0,count:+r.querySelector('.uq').value||1,price:+r.querySelector('.up').value||0})).filter(u=>u.n||u.cap);
     const body={kind:'venue',name:rec.name,type:TYPE_CODE[rec.type]||'bar',phone:rec.phone,district:$('#jDist').value,address:rec.address,map:rec.map,
       open:+$('#jOpen').value,close:+$('#jClose').value,tagline:$('#jTag').value.trim(),units,lunch:$('#jLunch').value.trim(),bday:$('#jBday').value.trim(),deal:$('#jDeal').value.trim(),date:$('#jDate').checked,menu:rec.menuUrl,capacity:rec.capacity||0};
-    fetch(REVIEWS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}).catch(()=>{m.innerHTML='<div class="err">Илгээж чадсангүй. Интернэтээ шалгаад дахин оролдоно уу, эсвэл 8505 0628 руу залгана уу.</div>'});
+    const files=PHOTO_FILES;
+    shrinkAll(files).then(ph=>{body.photos=ph;
+      return fetch(REVIEWS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})})
+    .catch(()=>{m.innerHTML='<div class="err">Илгээж чадсангүй. Интернэтээ шалгаад дахин оролдоно уу, эсвэл 8505 0628 руу залгана уу.</div>'});
   }
   m.innerHTML=WHO==='org'
     ?`<div class="ok">Баярлалаа! <b>${esc(rec.name)}</b> бүртгэгдлээ. Бид шалгаад 24 цагийн дотор сайтад нийтэлнэ. Асуух зүйл байвал ${esc(rec.phone)} руу залгана.</div>`
     :`<div class="ok">Тавтай морил, <b>${esc(rec.name)}</b>! Таны бүртгэл үүслээ.</div>`;
   e.target.reset();QR=null;$('#jQrImg').hidden=true;$('#jMapOpen').hidden=true;$('#jQrTxt').textContent='QR цэс эсвэл цэсний зургаа сонгох';
-  PHOTOS=[];$('#jThumbs').innerHTML='';$('#jPhTxt').textContent='Заал, ширээ, тайзны зургуудаа сонгох (хэдийг ч)';syncHall();
+  PHOTOS=[];PHOTO_FILES=[];$('#jThumbs').innerHTML='';$('#jPhTxt').textContent='Заал, ширээ, тайзны зургуудаа сонгох (хэдийг ч)';syncHall();
   {const o=$('#jOpen'),c=$('#jClose');if(o)o.value='18';if(c)c.value='26';resetUnits()}
 });
 syncHall();
@@ -1583,7 +1598,7 @@ const defUnits=d=>[{id:'u0',n:d.type==='hall'?'Үндсэн танхим':'Ши�
 function upsertReal(d){if(!d||!d.id)return;
   let h=0;for(const ch of d.name)h=(h*31+ch.charCodeAt(0))%360;
   const units=d.units&&d.units.length?d.units:defUnits(d);
-  const v={id:d.id,name:d.name,type:d.type,district:d.district||'—',hue:h,open:d.open??18,close:d.close??26,tagline:d.tagline||TN[d.type]||'',units,lunch:d.lunch||undefined,adult:d.type==='strip',real:true,date:!!d.date,map:d.map,address:d.address||'',menu:d.menu,avail:d.avail||{}};
+  const v={id:d.id,name:d.name,type:d.type,district:d.district||'—',hue:h,open:d.open??18,close:d.close??26,tagline:d.tagline||TN[d.type]||'',units,lunch:d.lunch||undefined,adult:d.type==='strip',real:true,date:!!d.date,map:d.map,address:d.address||'',menu:d.menu,avail:d.avail||{},photos:(Array.isArray(d.photos)?d.photos:[]).filter(u=>/^https:\/\//.test(u))};
   const k=V.findIndex(x=>x.id===d.id);if(k>=0)V[k]=v;else V.push(v);
   if(d.bday||d.deal)PROMO[d.id]={bday:d.bday||undefined,deal:d.deal||undefined};else delete PROMO[d.id];
 }
@@ -1722,6 +1737,8 @@ function renderOwner(){const d=OWN.d,live=OWN.status==='approved';
   $('#oview').innerHTML=`<div class="mw">
   <div class="mh"><div><div class="mcat">🏪 Миний газар · ${live?'сайтад харагдаж байна':'шалгагдаж байна'}</div><h2 id="ovTitle">${esc(d.name)}</h2></div><button class="x" data-oclose aria-label="Хаах">×</button></div>
   <section class="osec"><h3>📅 Сул ширээ, өрөө</h3><p class="hint">Өдрөө сонгоод сул байгаа тоогоо тохируул. Дармагц хадгалагдаж, сайтад шууд харагдана.</p><div id="oAv" style="display:grid;gap:10px"></div><div class="ostat" id="oAvSt" aria-live="polite"></div></section>
+  <section class="osec"><h3>📷 Зураг</h3><p class="hint">Танхим, ширээ, тайз, хоол ундааны зургаа оруулна уу (${MAXPH} хүртэл). Эхний зураг нь картын нүүр болно.</p><div class="thumbs" id="oPh"></div>
+  <label class="ghost" style="display:inline-flex;gap:6px;align-items:center;cursor:pointer">＋ Зураг нэмэх<input type="file" id="oPhIn" accept="image/*" multiple hidden></label><div class="ostat" id="oPhSt" aria-live="polite"></div></section>
   <form class="join osec" id="oForm"><h3>✏️ Танилцуулга ба урамшуулал</h3>
   ${inp('tagline','Товч тайлбар','Жишээ: Амьд хөгжим · VIP өрөө · зогсоолтой',90)}
   ${inp('deal','🏷️ Хямдрал','Жишээ: Даваа–Пүрэв 18:00–20:00 цагт 20% хямд',120)}
@@ -1737,7 +1754,17 @@ function renderOwner(){const d=OWN.d,live=OWN.status==='approved';
   <button class="cta" type="submit">Хадгалах</button><div class="ostat" id="oFSt" aria-live="polite"></div></form>
   <div class="mact">${live?`<button class="ghost" data-oview="${esc(OWN.id)}">👀 Сайтад харах</button>`:''}<button class="ghost" data-ologout>Энэ төхөөрөмжөөс гарах</button></div>
   <p class="hint">Энэ холбоосыг хэнд ч бүү дамжуул. Утасныхаа нүүр дэлгэцэнд нэмбэл дараа нь нэг товшоод орно.</p></div>`;
-  const f=$('#oForm');f.querySelector('[name=open]').value=d.open??18;f.querySelector('[name=close]').value=d.close??26;renderAvail()}
+  const f=$('#oForm');f.querySelector('[name=open]').value=d.open??18;f.querySelector('[name=close]').value=d.close??26;renderAvail();renderOwnPh()}
+function renderOwnPh(){const el=$('#oPh');if(!el)return;const ph=OWN.d.photos||[];
+  el.innerHTML=ph.map((u,i)=>`<span style="position:relative;display:inline-block"><img src="${esc(u)}" alt="Зураг ${i+1}"><button type="button" class="x" data-ophdel="${i}" aria-label="Зураг ${i+1}-ийг хасах" style="position:absolute;top:-6px;right:-6px;width:24px;height:24px;font-size:14px">×</button></span>`).join('')||'<span class="hint">Одоогоор зураг алга.</span>'}
+async function saveOwnPh(list){ownStat('#oPhSt',true,'Хадгалж байна…');
+  try{const j=await ownApi({photos:list});OWN.d.photos=j.data.photos||[];if(OWN.status==='approved'){j.data.id=OWN.id;upsertReal(j.data);render()}renderOwnPh();ownStat('#oPhSt',true,'✓ Хадгалагдлаа · '+hhmm())}
+  catch(_){ownStat('#oPhSt',false,'Хадгалж чадсангүй. Интернэтээ шалгаад дахин оролдоно уу.')}}
+document.addEventListener('change',async e=>{if(e.target.id!=='oPhIn')return;
+  const cur=OWN.d.photos||[],room=MAXPH-cur.length,fs=[...(e.target.files||[])].filter(f=>f.type.startsWith('image/'));e.target.value='';
+  if(room<=0){ownStat('#oPhSt',false,`${MAXPH}-аас олон зураг оруулах боломжгүй. Эхлээд хуучнаа хасна уу.`);return}
+  if(!fs.length)return;ownStat('#oPhSt',true,'Зургаа бэлдэж байна…');
+  const add=await shrinkAll(fs.slice(0,room));saveOwnPh(cur.concat(add))});
 function ownStat(id,ok,msg){const e=$(id);if(!e)return;e.classList.toggle('err',!ok);e.textContent=msg}
 const hhmm=()=>{const n=new Date();return String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')};
 function setFree(uid,n){const ds=iso(DAYS[OWN.di]),u=OWN.d.units.find(x=>x.id===uid);if(!u)return;
@@ -1753,6 +1780,7 @@ document.addEventListener('click',e=>{
   const dy=e.target.closest('[data-oday]');if(dy){flushAvail();OWN.di=+dy.dataset.oday;renderAvail();return}
   const st=e.target.closest('[data-ostep]');if(st){const ds=iso(DAYS[OWN.di]),u=OWN.d.units.find(x=>x.id===st.dataset.ostep);setFree(u.id,freeOf(u,ds)+(+st.dataset.n));return}
   const se=e.target.closest('[data-oset]');if(se){setFree(se.dataset.oset,+se.dataset.n);return}
+  const pd=e.target.closest('[data-ophdel]');if(pd){const ph=(OWN.d.photos||[]).slice();ph.splice(+pd.dataset.ophdel,1);saveOwnPh(ph);return}
   const vw=e.target.closest('[data-oview]');if(vw){closeOwner();if(vById(vw.dataset.oview))openSheet(vw.dataset.oview);return}
   if(e.target.closest('[data-ologout]')){try{localStorage.removeItem('ubn.owner')}catch(_){}closeOwner();$('#myVenueBtn').hidden=true;return}
   if(e.target.closest('[data-oclose]'))closeOwner()});
@@ -1781,6 +1809,7 @@ document.addEventListener('click',async e=>{if(!e.target.closest('#installBtn')|
 <script>
 /* UB Night — English dictionary (Mongolian → English). Longest keys are matched first, whole-word only. */
 window.UBN_EN = {
+"📷 Зураг":"📷 Photos","Танхим, ширээ, тайз, хоол ундааны зургаа оруулна уу (6 хүртэл). Эхний зураг нь картын нүүр болно.":"Add photos of your hall, tables, stage, food and drinks (up to 6). The first photo becomes the card cover.","＋ Зураг нэмэх":"＋ Add photos","Одоогоор зураг алга.":"No photos yet.","Зургаа бэлдэж байна…":"Preparing photos…","✓ Хадгалагдлаа":"✓ Saved","Хадгалж чадсангүй. Интернэтээ шалгаад дахин оролдоно уу.":"Could not save. Check your connection and try again.",
 "UB Night — Улаанбаатарын бар, караоке, лаунж, эвент заал захиалга":"UB Night — Book bars, karaoke, lounges and event halls in Ulaanbaatar",
 "UB Night — нүүр":"UB Night — home",
 "Улаанбаатарын бар, ресторан, караоке, лаунж, стрип клаб, эвент заалуудыг нэг дороос хараад сул өрөө, ширээ, танхимаа сонгоно. Захиалга үнэгүй, төлбөрөө газар дээр нь төлнө. Бялуу, чимэглэл, DJ, хөтлөгч, буцахдаа жолоочийг хүртэл хамт захиална":"See Ulaanbaatar's bars, restaurants, karaoke, lounges, strip clubs and event halls in one place and pick a free room, table or hall. Booking is free and you pay at the venue. Add a cake, decorations, a DJ, an MC and even a driver home in the same booking",
