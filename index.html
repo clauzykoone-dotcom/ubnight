@@ -24,6 +24,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<!-- ТҮР «Coming soon» (2026-11-26): зөвхөн бүртгүүлэх хэсэг. Буцаахдаа SOON=false. ?preview=1 бол бүтэн сайт. -->
+<script>var SOON=true&&!/[?&]preview=1/.test(location.search);if(SOON)document.documentElement.classList.add('soon')</script>
 <script>try{const t=localStorage.getItem('zahialya.theme');if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(_){}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -332,6 +334,11 @@ button{cursor:pointer}
 .pick.on{border-style:solid;border-color:var(--accent)}
 /* for venues */
 .own-hero{padding-block:32px 8px;display:grid;gap:10px}
+.soonban{display:none}
+.soon .nav,.soon #browse,.soon #mine,.soon #dash,.soon #ny{display:none!important}
+.soon .soonban{display:block;text-align:center;padding:48px 16px 8px}
+.soonban h1{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(40px,9vw,76px);letter-spacing:-.03em;background:linear-gradient(90deg,#A78BFA,#F472B6,#FB923C);-webkit-background-clip:text;background-clip:text;color:transparent}
+.soonban p{margin:10px auto 0;max-width:560px;color:var(--muted);font-size:17px}
 .own-hero h2{font-family:var(--display);font-weight:700;font-size:clamp(26px,4.5vw,42px);line-height:1.08;letter-spacing:-.03em;margin:0;max-width:20ch}
 .own-hero p{margin:0;color:var(--muted);max-width:60ch}
 .feats{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin:18px 0}
@@ -500,6 +507,9 @@ button{cursor:pointer}
 .ghost{border:1px solid var(--line);background:none;border-radius:10px;padding:7px 12px;font-size:13px;font-weight:600}
 .ghost.warn{border-color:var(--accent);color:var(--accent)}
 .status{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ok)}
+.status.done{color:var(--muted)}
+.bk.past{opacity:.6}
+.bk-sub{margin:22px 0 2px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 
 /* venue dashboard */
 .dash-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
@@ -737,6 +747,7 @@ button{cursor:pointer}
     <div class="admin" id="admin" hidden></div>
   </section>
   <section id="own" class="wrap" hidden>
+    <div class="soonban"><h1>Coming soon</h1><p>UB Night удахгүй нээгдэнэ. Одоогоор бар, караоке, ресторан, лаунжаа үнэгүй бүртгүүлээрэй.</p></div>
     <div class="own-hero">
       <h2>Бар, караоке, танхимаа <span style="color:var(--accent)">UB Night</span>-д нэмээрэй</h2>
       <p>Бар, ресторан, караоке, лаунж, стрип клаб, эвент заал бүртгүүлж болно. Үйлчлүүлэгчид таны сул өрөө, ширээг шууд харж, үнэгүй захиална. Утсаар ярих, хоосон суудал хүлээх ажил багасна.</p>
@@ -991,7 +1002,7 @@ function dateLabel(ds){const i=DAYS.findIndex(d=>iso(d)===ds);if(i>=0)return day
 function rnd(str){let h=2166136261;for(let k=0;k<str.length;k++){h^=str.charCodeAt(k);h=Math.imul(h,16777619)}h^=h>>>13;h=Math.imul(h,0x5bd1e995);h^=h>>>15;return ((h>>>0)%1000)/1000}
 function rate(h,d,type){const w=d.getDay(),we=w===5||w===6;if(type==='hall')return (h>=17?.22:.08)+(we?.35:0)+(d.getMonth()===11?.25:0);if(type==='restaurant')return .12+(h>=12&&h<=13?.25:0)+(h>=18&&h<=20?.3:0)+(we?.15:0);let r=.16;if(h>=21&&h<=24)r+=.3;if(we)r+=.2;return r}
 
-const S={view:'browse',di:0,type:'all',district:'all',q:'',freeOnly:false,d:null,bookings:[],cancelArm:null,dashV:'dorgio',dashDi:0,sort:'rec',favOnly:false,favs:[],bdayOnly:false,dealOnly:false,pk:'all'};
+const S={view:SOON?'own':'browse',di:0,type:'all',district:'all',q:'',freeOnly:false,d:null,bookings:[],cancelArm:null,dashV:'dorgio',dashDi:0,sort:'rec',favOnly:false,favs:[],bdayOnly:false,dealOnly:false,pk:'all'};
 try{S.bookings=JSON.parse(localStorage.getItem('zahialya.bookings')||'[]')}catch(e){S.bookings=[]}
 try{S.favs=JSON.parse(localStorage.getItem('zahialya.favs')||'[]')}catch(e){S.favs=[]}
 function saveFavs(){try{localStorage.setItem('zahialya.favs',JSON.stringify(S.favs))}catch(e){}}
@@ -1286,13 +1297,19 @@ function submit(){
 function renderMine(){
   const el=$('#mineList');
   if(!S.bookings.length){el.innerHTML='<div class="empty">Одоохондоо захиалга алга. «Газрууд» хэсгээс бар, караоке, танхим сонгоод захиалаарай.</div>';return}
-  el.innerHTML=S.bookings.map(b=>{const v=vById(b.vid),u=v.units.find(x=>x.id===b.uid);
+  /* split by end time: upcoming first (soonest on top), finished ones below without a cancel button */
+  const now=Date.now(),up=S.bookings.filter(b=>bkEnd(b)>now).sort((a,b)=>bkStart(a)-bkStart(b)),past=S.bookings.filter(b=>bkEnd(b)<=now).sort((a,b)=>bkStart(b)-bkStart(a));
+  const card=b=>{const v=vById(b.vid),u=v.units.find(x=>x.id===b.uid),done=bkEnd(b)<=now;
     const sv=(b.svc||[]).map(id=>SERVICES.find(s=>s.id===id).n);
-    return `<div class="bk"><div class="when"><b>${hl(b.h)}</b><small>${dateLabel(b.date)}</small></div>
+    return `<div class="bk${done?' past':''}"><div class="when"><b>${hl(b.h)}</b><small>${dateLabel(b.date)}</small></div>
       <div><h3>${esc(v.name)}${b.ev?' · '+esc(b.ev):''}</h3><div class="meta">${esc(u.n)} · ${b.guests} хүн · ${hl(b.h)}–${hl(b.h+b.dur)}</div>${sv.length?`<div class="meta">+ ${sv.join(', ')}</div>`:''}<div class="meta mono">${b.code} ${b.total?'· баримжаа '+fmt(b.total):''} · газар дээр төлнө</div></div>
-      <div class="acts"><span class="status">Баталгаажсан</span><button class="ghost ${S.cancelArm===b.code?'warn':''}" data-cancel="${b.code}">${S.cancelArm===b.code?'Дахин дарж цуцлах':'Цуцлах'}</button></div></div>`}).join('');
+      <div class="acts">${done?'<span class="status done">Өнгөрсөн</span>':`<span class="status">Баталгаажсан</span><button class="ghost ${S.cancelArm===b.code?'warn':''}" data-cancel="${b.code}">${S.cancelArm===b.code?'Дахин дарж цуцлах':'Цуцлах'}</button>`}</div></div>`};
+  el.innerHTML=(up.length?up.map(card).join(''):'<div class="empty">Ирэх захиалга алга.</div>')+(past.length?`<h3 class="bk-sub">Өнгөрсөн захиалга</h3>${past.map(card).join('')}`:'');
 }
-function updateCount(){$('#mineCount').textContent=S.bookings.length?S.bookings.length:''}
+/* booking start/end as timestamps; h can pass 24 (after midnight), Date rolls it into the next day */
+const bkStart=b=>{const [y,m,d]=b.date.split('-').map(Number);return new Date(y,m-1,d,b.h).getTime()};
+const bkEnd=b=>bkStart(b)+b.dur*3600e3;
+function updateCount(){const n=S.bookings.filter(b=>bkEnd(b)>Date.now()).length;$('#mineCount').textContent=n||''}
 
 /* ---------- venue dashboard ---------- */
 function renderAdmin(){
@@ -1366,7 +1383,7 @@ document.addEventListener('click',e=>{
   const t=e.target.closest('button,[data-close],a[data-view]');if(!t)return;
   if(t.tagName==='A')e.preventDefault();
   const ds=t.dataset;
-  if(ds.view){S.view=ds.view;S.cancelArm=null;render();window.scrollTo(0,0);return}
+  if(ds.view){if(SOON&&ds.view!=='own')return;S.view=ds.view;S.cancelArm=null;render();window.scrollTo(0,0);return}
   if(ds.day!==undefined){S.di=+ds.day;renderBrowse();return}
   if(ds.dday!==undefined){S.dashDi=+ds.dday;renderDash();return}
   if(ds.lq!==undefined){const on=t.getAttribute('aria-pressed')!=='true';LQ=on?ds.lq:'';document.querySelectorAll('[data-lq]').forEach(b=>b.setAttribute('aria-pressed',String(on&&b===t)));S.type='all';renderGrid();document.getElementById('resultCount').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});return}
@@ -1862,6 +1879,7 @@ window.UBN_EN = {
 "Газрын самбар":"Venue dashboard",
 "Бүртгүүлэх хүсэлт илгээх":"Send registration request",
 "Бүртгүүлэх":"Register",
+"UB Night удахгүй нээгдэнэ. Одоогоор бар, караоке, ресторан, лаунжаа үнэгүй бүртгүүлээрэй.":"UB Night is opening soon. For now, register your bar, karaoke, restaurant or lounge for free.",
 "Апп болгох":"Install app",
 "Хэсгүүд":"Sections",
 "Бүх дүүрэг":"All districts",
@@ -1975,7 +1993,7 @@ window.UBN_EN = {
 "Эхлэх цагаа сонгоно уу.":"Choose a start time.",
 "Одоохондоо захиалга алга. «Газрууд» хэсгээс бар, караоке, танхим сонгоод захиалаарай":"No bookings yet. Pick a bar, karaoke or hall under «Venues»",
 "Энэ төхөөрөмж дээр хийсэн захиалгууд. Газар дээр очихдоо кодоо хэлнэ":"Bookings made on this device. Say your code at the venue",
-"Баталгаажсан":"Confirmed","Дахин дарж цуцлах":"Tap again to cancel","Цуцлах":"Cancel","баримжаа":"approx.",
+"Баталгаажсан":"Confirmed","Өнгөрсөн":"Past","Өнгөрсөн захиалга":"Past bookings","Ирэх захиалга алга":"No upcoming bookings","Дахин дарж цуцлах":"Tap again to cancel","Цуцлах":"Cancel","баримжаа":"approx.",
 "хадгалснаас хасах":"remove from saved","хадгалах":"save","Хадгалсан газар алга. Картын":"No saved venues. Tap the card's","товчийг дарж хадгална":"button to save",
 "Энэ газрыг хуваалцах":"Share this venue","Холбоос хуулагдлаа":"Link copied","Хуваалцах":"Share",
 "Үйлчлүүлэгчийн үнэлгээ":"Customer reviews","Үнэлгээ үлдээх":"Leave a review","Таны нэр":"Your name","Сэтгэгдэл (заавал биш)":"Comment (optional)","Сэтгэгдэл":"Comment","Илгээх":"Send","Илгээж байна…":"Sending…","Од":"Stars","од":"stars","үнэлгээ":"reviews",
